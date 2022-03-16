@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://qinwanlin.github.io</id>
     <title>qinwanlin</title>
-    <updated>2022-03-15T09:22:27.184Z</updated>
+    <updated>2022-03-16T03:06:12.911Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://qinwanlin.github.io"/>
     <link rel="self" href="https://qinwanlin.github.io/atom.xml"/>
@@ -16,26 +16,26 @@
         <link href="https://qinwanlin.github.io/post/gridea-github-gitee-blog/">
         </link>
         <updated>2022-03-15T06:28:07.000Z</updated>
-        <summary type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程。主要介绍如何同步到 github 和 gitee。</p>
+        <summary type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程，主要介绍如何同步到 github 和 gitee。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程。主要介绍如何同步到 github 和 gitee。</p>
+        <content type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程，主要介绍如何同步到 github 和 gitee。</p>
 <!-- more -->
-<h1 id="为什么选择-gridea">为什么选择 Gridea</h1>
+<h2 id="为什么选择-gridea">为什么选择 Gridea</h2>
 <p>现在主流的静态博客有Jekyll、Hugo、Hexo，之所以选择Gridea，两个原因：</p>
 <ol>
 <li>简单实用，自带客户端，直接下载一个桌面程序安装，配置、预览、同步，就搞定了。</li>
 <li>有评论功能，只需要简单配置就能加上评论功能。有了评价，博客才有了灵魂。</li>
 </ol>
-<h1 id="如果安装">如果安装</h1>
+<h2 id="如何安装">如何安装</h2>
 <p>安装的事情太简单了，不想重复，浪费时间。按照参考的链接很容易就上手了。以下只分享一些比较特别的内容。</p>
-<h1 id="同步到github">同步到github</h1>
+<h2 id="同步到github">同步到github</h2>
 <p>由于国内众所周知的原因，访问github有一定概率的困难。使用 Gridea 的客户端即使测试连接成功，同步文件到 github 上也是经常性失败的。</p>
 <p>同步文件到 github 有两种方法：</p>
 <ol>
 <li>找梯子翻出去，免费的不好用，收费的，嗯，不舍得</li>
 <li>使用 Github Destop 同步。没搞清楚为什么 Gridea 同步失败，而使用 Github Destop 同步成功的概率非常大。</li>
 </ol>
-<p>如果使用 Destop 同步，可参考 <a href="https://github.com/getgridea/gridea/issues/505">关于同步那些事（国内 github 和 gitee）</a></p>
+<p>如何使用 Destop 同步，可参考 <a href="https://github.com/getgridea/gridea/issues/505">关于同步那些事（国内 github 和 gitee）</a></p>
 <p>大致步骤是：</p>
 <ol>
 <li>删除 output 目录下所有文件</li>
@@ -43,11 +43,11 @@
 <li>在Gridea中点同步，生成文件到 output 目录</li>
 <li>使用 Destop 同步到 github</li>
 </ol>
-<h1 id="同步到gitee">同步到gitee</h1>
+<h2 id="同步到gitee">同步到gitee</h2>
 <p>Gridea 本身不支持gitee，需要自己手动同步，为了简化步骤，写成一个脚本，一键同步到 gitee。<br>
 主要参考的文章是  <a href="https://www.cnblogs.com/zxyfrank/p/gridea-win10.html">采用 Gitee Pages + Gridea + 批处理 搭建个人主页 (win10)</a></p>
 <p>以下分享几段完整的代码。</p>
-<h2 id="gitee_initbat">gitee_init.bat</h2>
+<h3 id="gitee_initbat">gitee_init.bat</h3>
 <p>在站点源文件路径（我的目录是 C:\Users\Administrator\Documents\Gridea）下，创建一个gitee_init.bat，用于初始化 gitee 项目的目录。</p>
 <pre><code class="language-bash">cd /d %~dp0
 
@@ -65,7 +65,7 @@ git branch --set-upstream-to=origin/master master
 
 pause
 </code></pre>
-<h2 id="replacepy">replace.py</h2>
+<h3 id="replacepy">replace.py</h3>
 <p>因为需要把所有文件中的 github 的域名替换为 gitee 的域名，所以写了一个 python 的脚本，最后编译为 exe 备用。创建一个replace.py的文件。</p>
 <pre><code class="language-python">import os
 import sys
@@ -117,7 +117,7 @@ if __name__ == &quot;__main__&quot;:
     except Exception as e:
         print(str(e))
 </code></pre>
-<h2 id="gitee_pushbat">gitee_push.bat</h2>
+<h3 id="gitee_pushbat">gitee_push.bat</h3>
 <p>再创建一个 gitee_push.bat 的文件，以后同步文件，就需要点运行一下就可以了。</p>
 <pre><code class="language-bash">cd /d %~dp0
 
@@ -143,7 +143,9 @@ echo &quot;请到gitee上点更新pages&quot;
 
 pause
 </code></pre>
-<h1 id="参考">参考</h1>
+<h2 id="主题">主题</h2>
+<p>本博客使用的主题是 Concise <a href="https://www.jianshu.com/p/78e3ee0d8781">https://www.jianshu.com/p/78e3ee0d8781</a>，并做了小部分修改。</p>
+<h2 id="参考">参考</h2>
 <ol>
 <li>Gitee pages 官方指导  <a href="https://gitee.com/help/articles/4136#article-header0">https://gitee.com/help/articles/4136#article-header0</a></li>
 <li>Gridea 官方文档 <a href="https://gridea.dev/docs/">https://gridea.dev/docs/</a></li>
