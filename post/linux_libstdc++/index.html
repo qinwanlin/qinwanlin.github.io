@@ -10,14 +10,14 @@
 <meta name="keywords" content="">
 <meta name="description" content="欢迎访问[qinwanlin]的个人博客">
 <meta name="author" content="kveln">
-<title>Linux 运行程序 libstdc++ 错误的问题 | qinwanlin</title>
+<title>Linux 程序 libstdc++ 版本错误的问题 | qinwanlin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
 <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 <link
   href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
   rel='stylesheet' type='text/css'>
-<link rel="alternate" type="application/rss+xml" title="Linux 运行程序 libstdc++ 错误的问题 | qinwanlin » Feed"
+<link rel="alternate" type="application/rss+xml" title="Linux 程序 libstdc++ 版本错误的问题 | qinwanlin » Feed"
   href="https://qinwanlin.github.io/atom.xml">
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
@@ -30,7 +30,7 @@
 
 <script>hljs.initHighlightingOnLoad();</script>
 
-  <meta property="og:description" content="Linux 运行程序 libstdc++ 错误的问题" />
+  <meta property="og:description" content="Linux 程序 libstdc++ 版本错误的问题" />
   <meta property="og:url" content="https://qinwanlin.github.io/post/linux_libstdc++/" />
   <meta property="og:locale" content="zh-CN" />
   <meta property="og:type" content="website" />
@@ -84,7 +84,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1648185318874"
+            <form id="gridea-search-form" style="position: relative" data-update="1650769421378"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -140,7 +140,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1648185318874"
+            <form id="gridea-search-form" style="position: relative" data-update="1650769421378"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -163,8 +163,12 @@
             <div class="post-heading">
               <span class="tags">
                 
+                <a href="https://qinwanlin.github.io/tag/5GZcLX9QR/" class="tag">linux</a>
+                
+                <a href="https://qinwanlin.github.io/tag/suhMZp6Gqs/" class="tag">libstdc++</a>
+                
               </span>
-              <h1>Linux 运行程序 libstdc++ 错误的问题</h1>
+              <h1>Linux 程序 libstdc++ 版本错误的问题</h1>
               <span class="meta">
                 Posted on
                 2022-03-24，4 min read
@@ -182,7 +186,10 @@
       <div class="row">
         <div class="col-lg-10 col-md-10 mx-auto post-content-container">
           
-          <p>最近因为原来的编译是 GCC 4.7.3，版本太低，不能完全支持 C++11，因此改为使用 GCC 4.8.3 来编译程序，发现因为库版本太低，运行不起来。经常实验和查找资料，把一些相关内容记录下来。</p>
+          <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/linux_libstdc++.png" alt="封面图">
+          </img>
+          
+          <p>最近因为原来的编译是 GCC 4.7.3，版本太低，不能完全支持 C++11，因此改为使用 GCC 4.8.3 来编译程序，发现因为库版本太低，运行不起来。经过实验和查找资料，把一些相关内容记录下来。</p>
 <!-- more -->
 <h2 id="错误提示信息">错误提示信息</h2>
 <p>错误提示信息显示，所依赖的库 libstdc++.so.6，要求的 GLIBCXX 版本是 3.4.19，而系统上的库没找到。</p>
@@ -354,7 +361,7 @@ $ locate libstdc++.so
           <div class="comment" style="text-align: center;">
             
             <span id="/post/linux_libstdc++/" class="leancloud_visitors"
-              data-flag-title="Linux 运行程序 libstdc++ 错误的问题">
+              data-flag-title="Linux 程序 libstdc++ 版本错误的问题">
               <em class="post-meta-item-text">阅读量 </em>
               <i class="leancloud-visitors-count">loading...</i>
             </span>
