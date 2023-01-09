@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="referrer" content="never">
+<meta name="keywords" content="">
+<meta name="description" content="欢迎访问[qinwanlin]的个人博客">
+<meta name="author" content="kveln">
+<title>
+    Linux 程序 libstdc++ 版本错误的问题 | qinwanlin
+</title>
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/bootstrap.min.css">
+<link href="https://qinwanlin.github.io/media/css/all.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
+<link rel="alternate" type="application/rss+xml" title="Linux 程序 libstdc++ 版本错误的问题 | qinwanlin » Feed"
+      href="https://qinwanlin.github.io/atom.xml">
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/androidstudio.min.css">
+<link href="https://qinwanlin.github.io/styles/main.css" rel="stylesheet">
+<script src="https://qinwanlin.github.io/media/scripts/jquery.min.js"></script>
+
+<script src="https://qinwanlin.github.io/media/scripts/highlight.min.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+    <meta property="og:description" content="Linux 程序 libstdc++ 版本错误的问题"/>
+    <meta property="og:url" content="https://qinwanlin.github.io/post/linux_libstdc++/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="qinwanlin"/>
+    <!-- <script src="../assets/styles/scripts/tocScript.js"></script> -->
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead" style="background-image: url('https://qinwanlin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                    <!-- 没Title为其他页面Header -->
+                    
+                        <!-- 没Title并且有headerType为Post：文章Header -->
+                        <div class="post-heading">
+              <span class="tags">
+                  
+                      <a href="https://qinwanlin.github.io/tag/5GZcLX9QR/" class="tag">linux</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/suhMZp6Gqs/" class="tag">libstdc++</a>
+                  
+              </span>
+                            <h1>Linux 程序 libstdc++ 版本错误的问题</h1>
+                            <span class="meta">
+                Posted on
+                2022-03-24，4 min read
+              </span>
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article id="post-content-article">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto post-content-container">
+                
+                    <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/linux_libstdc++.png" alt="封面图">
+                    </img>
+                
+                <p>最近因为原来的编译是 GCC 4.7.3，版本太低，不能完全支持 C++11，因此改为使用 GCC 4.8.3 来编译程序，发现因为库版本太低，运行不起来。经过实验和查找资料，把一些相关内容记录下来。</p>
+<!-- more -->
+<h2 id="错误提示信息">错误提示信息</h2>
+<p>错误提示信息显示，所依赖的库 libstdc++.so.6，要求的 GLIBCXX 版本是 3.4.19，而系统上的库没找到。</p>
+<pre><code class="language-bash">root@socfpga:~# ./NetProc
+./NetProc: /lib/libstdc++.so.6: version `GLIBCXX_3.4.19' not found (required by ./NetProc)
+</code></pre>
+<h2 id="查看当前的库版本">查看当前的库版本</h2>
+<p>那如何查看板上的libstdc++.so.6版本呢，使用 <code>strings</code> 命令。</p>
+<pre><code class="language-bash">root@socfpga:~# strings /lib/libstdc++.so.6 |grep GLIBC
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+GLIBCXX_3.4.7
+GLIBCXX_3.4.8
+GLIBCXX_3.4.9
+GLIBCXX_3.4.10
+GLIBCXX_3.4.11
+GLIBCXX_3.4.12
+GLIBCXX_3.4.13
+GLIBCXX_3.4.14
+GLIBCXX_3.4.15
+GLIBCXX_3.4.16
+GLIBCXX_3.4.17
+GLIBC_2.4
+GLIBCXX_DEBUG_MESSAGE_LENGTH
+</code></pre>
+<h2 id="查询库对应的编译器">查询库对应的编译器</h2>
+<p>理论上，系统上的库是什么版本，应用程序就应该用对应版本的编译器编译，才可以匹配。那如何查看当前库是使用哪个版本的编译器编译的呢，使用 <code>readelf</code> 命令。</p>
+<pre><code class="language-bash">root@socfpga:~# readelf /lib/libstdc++.so.6 -p .comment
+String dump of section '.comment':
+  [     0]  GCC: (crosstool-NG linaro-1.13.1-4.7-2012.11-20121123 - Linaro GCC 2012.11) 4.7.3 20121106 (prerelease)
+</code></pre>
+<p>从上面命令查出来的信息可以明显看到，使用的是 GCC4.7.3 编译器编译的，因此使用 GCC 4.8.3 来编译程序，运行不起来也是正常的。</p>
+<h2 id="查找-libstdcso6库文件">查找 libstdc++.so.6库文件</h2>
+<p>网上一些文章说，查看一下系统里面有没有其他高版本的库，指定高版本的库文件也许能运行起来。查找库文件的话，可以使用 <code>find</code> 命令，或者 <code>locate</code> 命令，不过当前使用的系统中没有locate命令。</p>
+<pre><code class="language-bash">root@socfpga:~# find / -name &quot;libstdc++.so.6*&quot;
+/lib/libstdc++.so.6.0.17-gdb.py
+/lib/libstdc++.so.6.0.17
+/lib/libstdc++.so.6
+
+# 或
+$ locate libstdc++.so
+</code></pre>
+<p>从查找的结果来看，只包含一个版本，就是6.0.17。</p>
+<h2 id="版本对应关系">版本对应关系</h2>
+<table>
+<thead>
+<tr>
+<th>gcc 版本</th>
+<th>libstdc++ 版本号</th>
+<th>glibc 版本号</th>
+<th>cxxabi 版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.7</td>
+<td>libstdc++.so.6.0.17</td>
+<td>GLIBCXX_3.4.17</td>
+<td>CXXABI_1.3.6</td>
+</tr>
+<tr>
+<td>4.8</td>
+<td>libstdc++.so.6.0.18</td>
+<td>GLIBCXX_3.4.18</td>
+<td>CXXABI_1.3.7</td>
+</tr>
+<tr>
+<td>4.9</td>
+<td>libstdc++.so.6.0.20</td>
+<td>GLIBCXX_3.4.20</td>
+<td>CXXABI_1.3.8</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>libstdc++.so.6.0.21</td>
+<td>GLIBCXX_3.4.21</td>
+<td>CXXABI_1.3.9</td>
+</tr>
+<tr>
+<td>6.1</td>
+<td>libstdc++.so.6.0.22</td>
+<td>GLIBCXX_3.4.22</td>
+<td>CXXABI_1.3.10</td>
+</tr>
+<tr>
+<td>7.1</td>
+<td>libstdc++.so.6.0.23</td>
+<td>GLIBCXX_3.4.23</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>libstdc++.so.6.0.24</td>
+<td>GLIBCXX_3.4.24</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>8.1</td>
+<td>libstdc++.so.6.0.25</td>
+<td>GLIBCXX_3.4.25</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>9.1</td>
+<td>libstdc++.so.6.0.26</td>
+<td>GLIBCXX_3.4.26</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>9.2</td>
+<td>libstdc++.so.6.0.27</td>
+<td>GLIBCXX_3.4.27</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>9.3</td>
+<td>libstdc++.so.6.0.28</td>
+<td>GLIBCXX_3.4.28</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>10.1</td>
+<td>libstdc++.so.6.0.28</td>
+<td>GLIBCXX_3.4.28</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+</tbody>
+</table>
+<h2 id="解决办法">解决办法</h2>
+<p>升级动态库即可解决问题。因为这开发板的系统不能随便动，也不在职责之内，不便实验。具体过程可参考后面的链接。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://blog.csdn.net/u012811841/article/details/77854581">通用方法 解决 /usr/lib64/libstdc++.so.6: version `CXXABI_1.3.8' not found 的问题</a></li>
+<li><a href="https://www.gudanba.com/1399.html">Linux 解决 libstdc++ 的版本问题</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html#abi.versioning">GCC官方详细版本对应关系</a></li>
+<li><a href="https://blog.csdn.net/mo4776/article/details/119837501">多个 gcc/glibc 版本的共存及指定 gcc 版本的编译</a></li>
+<li><a href="https://gcc.gnu.org/projects/cxx-status.html#cxx11">C++ Standards Support in GCC</a></li>
+</ol>
+
+                <div class="toc-container">
+                    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%94%99%E8%AF%AF%E6%8F%90%E7%A4%BA%E4%BF%A1%E6%81%AF">错误提示信息</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84%E5%BA%93%E7%89%88%E6%9C%AC">查看当前的库版本</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%BA%93%E5%AF%B9%E5%BA%94%E7%9A%84%E7%BC%96%E8%AF%91%E5%99%A8">查询库对应的编译器</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE-libstdcso6%E5%BA%93%E6%96%87%E4%BB%B6">查找 libstdc++.so.6库文件</a></li>
+<li><a href="#%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB">版本对应关系</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">解决办法</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+
+                </div>
+                
+                    <hr/>
+                    <p class="next-post">下一篇：
+                        <a href="https://qinwanlin.github.io/post/gridea-github-gitee-blog/">
+                                                    <span class="post-title">
+                Gridea + github + gitee 搭建个人博客&rarr;
+              </span>
+                        </a>
+                    </p>
+                
+                <div class="comment" style="text-align: center;">
+                    
+                        <span id="/post/linux_libstdc++/" class="leancloud_visitors"
+                              data-flag-title="Linux 程序 libstdc++ 版本错误的问题">
+              <em class="post-meta-item-text">阅读量 </em>
+              <i class="leancloud-visitors-count">loading...</i>
+            </span>
+                    
+
+                    
+                    
+                        <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+    div#vcomments {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2.5%
+    }
+</style>
+
+
+    <div id="vcomments"></div>
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'g7YOvotVryeVhveDCMXHuimp-gzGzoHsz',
+        appKey: 'GMcbRHrEIs29YO7CFgmgtNDW',
+        avatar: 'robohash',
+        pageSize: 10,
+        recordIp: false,
+        placeholder: '你来啦，来说说你的想法',
+        visitor: true,
+    });
+</script>
+
+                    
+                </div>
+            </div>
+        </div>
+</article>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <!-- <li class="list-inline-item">
+              <a href="https://qinwanlin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li> -->
+                </ul>
+                <p class="copyright text-muted">Copyright &copy;<span>qinwanlin</span><br><a
+                            href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="https://qinwanlin.github.io/media/scripts/bootstrap.bundle.min.js"></script>
+<script src="https://qinwanlin.github.io/media/scripts/clean-blog.min.js"></script>
+<script src="//instant.page/3.0.0" type="module" defer
+        integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<style type="text/css">
+    a.back_to_top {
+        text-decoration: none;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background: #f0f0f0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 36px;
+        font-size: 18px;
+        text-align: center;
+        transition-duration: .5s;
+        transition-propety: background-color;
+        display: none
+    }
+
+    a.back_to_top span {
+        color: #888
+    }
+
+    a.back_to_top:hover {
+        cursor: pointer;
+        background: #dfdfdf
+    }
+
+    a.back_to_top:hover span {
+        color: #555
+    }
+
+    @media print, screen and(max-width: 580px) {
+        .back_to_top {
+            display: none !important
+        }
+    }
+</style>
+<a id="back_to_top" href="#" class="back_to_top">
+    <span>▲</span></a>
+<script>
+    $(document).ready((function (_this) {
+        return function () {
+            var bt;
+            bt = $('#back_to_top');
+            if ($(document).width() > 480) {
+                $(window).scroll(function () {
+                    var st;
+                    st = $(window).scrollTop();
+                    if (st > 30) {
+                        return bt.css('display', 'block')
+                    } else {
+                        return bt.css('display', 'none')
+                    }
+                });
+                return bt.click(function () {
+                    $('body,html').animate({
+                            scrollTop: 0
+                        },
+                        800);
+                    return false
+                })
+            }
+        }
+    })(this));
+</script>
+<script src="https://qinwanlin.github.io/media/scripts/tocScript.js"></script>
+</body>
+
+</html>

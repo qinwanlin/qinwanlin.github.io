@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="referrer" content="never">
+<meta name="keywords" content="">
+<meta name="description" content="欢迎访问[qinwanlin]的个人博客">
+<meta name="author" content="kveln">
+<title>
+    Gridea + github + gitee 搭建个人博客 | qinwanlin
+</title>
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/bootstrap.min.css">
+<link href="https://qinwanlin.github.io/media/css/all.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
+<link rel="alternate" type="application/rss+xml" title="Gridea + github + gitee 搭建个人博客 | qinwanlin » Feed"
+      href="https://qinwanlin.github.io/atom.xml">
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/androidstudio.min.css">
+<link href="https://qinwanlin.github.io/styles/main.css" rel="stylesheet">
+<script src="https://qinwanlin.github.io/media/scripts/jquery.min.js"></script>
+
+<script src="https://qinwanlin.github.io/media/scripts/highlight.min.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+    <meta property="og:description" content="Gridea + github + gitee 搭建个人博客"/>
+    <meta property="og:url" content="https://qinwanlin.github.io/post/gridea-github-gitee-blog/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="qinwanlin"/>
+    <!-- <script src="../assets/styles/scripts/tocScript.js"></script> -->
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead" style="background-image: url('https://qinwanlin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                    <!-- 没Title为其他页面Header -->
+                    
+                        <!-- 没Title并且有headerType为Post：文章Header -->
+                        <div class="post-heading">
+              <span class="tags">
+                  
+                      <a href="https://qinwanlin.github.io/tag/80KJaMvpK/" class="tag">github</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/BgBIlFCZ_D/" class="tag">gitee</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/JbM3vmCrOe/" class="tag">blog</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/xuB2M6Epr/" class="tag">Gridea</a>
+                  
+              </span>
+                            <h1>Gridea + github + gitee 搭建个人博客</h1>
+                            <span class="meta">
+                Posted on
+                2022-03-15，5 min read
+              </span>
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article id="post-content-article">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto post-content-container">
+                
+                    <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/gridea-github-gitee-blog.jpg" alt="封面图">
+                    </img>
+                
+                <p>本博客由使用 Gridea 创建，记录一下搭建过程，主要介绍如何同步到 github 和 gitee。</p>
+<!-- more -->
+<h2 id="为什么选择-gridea">为什么选择 Gridea</h2>
+<p>现在主流的静态博客有Jekyll、Hugo、Hexo，之所以选择Gridea，两个原因：</p>
+<ol>
+<li>简单实用，自带客户端，直接下载一个桌面程序安装，配置、预览、同步，就搞定了。</li>
+<li>有评论功能，只需要简单配置就能加上评论功能。有了评价，博客才有了灵魂。</li>
+</ol>
+<h2 id="如何安装">如何安装</h2>
+<p>安装的事情太简单了，不想重复，浪费时间。按照参考的链接很容易就上手了。以下只分享一些比较特别的内容。</p>
+<h2 id="同步到github">同步到github</h2>
+<p>由于国内众所周知的原因，访问github有一定概率的困难。使用 Gridea 的客户端即使测试连接成功，同步文件到 github 上也是经常性失败的。</p>
+<p>同步文件到 github 有两种方法：</p>
+<ol>
+<li>找梯子翻出去，免费的不好用，收费的，嗯，不舍得</li>
+<li>使用 Github Destop 同步。没搞清楚为什么 Gridea 同步失败，而使用 Github Destop 同步成功的概率非常大。</li>
+</ol>
+<p>如何使用 Destop 同步，可参考 <a href="https://github.com/getgridea/gridea/issues/505">关于同步那些事（国内 github 和 gitee）</a></p>
+<p>大致步骤是：</p>
+<ol>
+<li>删除 output 目录下所有文件</li>
+<li>使用 Destop 克隆 github 项目到 output 目录</li>
+<li>在Gridea中点同步，生成文件到 output 目录</li>
+<li>使用 Destop 同步到 github</li>
+</ol>
+<h2 id="同步到gitee">同步到gitee</h2>
+<p>Gridea 本身不支持gitee，需要自己手动同步，为了简化步骤，写成一个脚本，一键同步到 gitee。<br>
+主要参考的文章是  <a href="https://www.cnblogs.com/zxyfrank/p/gridea-win10.html">采用 Gitee Pages + Gridea + 批处理 搭建个人主页 (win10)</a></p>
+<p>以下分享几段完整的代码。</p>
+<h3 id="gitee_initbat">gitee_init.bat</h3>
+<p>在站点源文件路径（我的目录是 C:\Users\Administrator\Documents\Gridea）下，创建一个gitee_init.bat，用于初始化 gitee 项目的目录。</p>
+<pre><code class="language-bash">cd /d %~dp0
+
+:: 清空，删除再创建目录
+rd output_gitee
+md output_gitee
+
+:: 进入目录，初始化目录，拉取项目文件
+cd output_gitee
+git init
+git remote add origin https://gitee.com/qinwanlin/qinwanlin.git
+git fetch  
+git reset --hard origin/master
+git branch --set-upstream-to=origin/master master
+
+pause
+</code></pre>
+<h3 id="replacepy">replace.py</h3>
+<p>因为需要把所有文件中的 github 的域名替换为 gitee 的域名，所以写了一个 python 的脚本，最后编译为 exe 备用。创建一个replace.py的文件。</p>
+<pre><code class="language-python">import os
+import sys
+
+path = '.\output_gitee'
+ori = 'qinwanlin.github.io'
+tar = 'qinwanlin.gitee.io'
+
+def get_filelist(dir):
+    filelist = []
+    for home, dirs, files in os.walk(path):
+        dirs[:] = [d for d in dirs if not d[0] == '.']
+        print(home + &quot; : &quot; + str(dirs))
+        for filename in files:
+            # 文件名列表，包含完整路径
+            filelist.append(os.path.join(home, filename))
+    return filelist
+
+def replace(file_path, old_str, new_str):
+    try:
+        f = open(file_path,'r+',encoding='utf-8')
+        alltext = f.read().replace(old_str, new_str)
+        f.seek(0)
+        f.truncate()
+        f.write(alltext)
+        f.close()
+        print(&quot;replace success: &quot; + file_path)
+    except Exception as e:
+        print(&quot;replace error  : &quot; + file_path)
+
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) &lt; 4 :
+        print(&quot;replace dir github_url gitee_url \n&quot;)
+        exit()
+
+    path = sys.argv[1]
+    ori = sys.argv[2]
+    tar = sys.argv[3]
+
+    print(path)
+    print(ori)
+    print(tar)
+
+    filelist = get_filelist(dir)
+    print(&quot;file count = &quot; + str(len(filelist)))
+    try:
+        for file in filelist:
+            replace(file, ori, tar)
+    except Exception as e:
+        print(str(e))
+</code></pre>
+<h3 id="gitee_pushbat">gitee_push.bat</h3>
+<p>再创建一个 gitee_push.bat 的文件，以后同步文件，就需要点运行一下就可以了。</p>
+<pre><code class="language-bash">cd /d %~dp0
+
+:: 拷贝文件
+xcopy .\output .\output_gitee /e/c/y
+
+:: 替换地址
+replace.exe .\output_gitee qinwanlin.github.io qinwanlin.gitee.io
+
+:: 替换Client ID
+replace.exe .\output_gitee 0e579c516c3dcxxxxxxxxxxx d2c9e0edd275537086391bcd1975f92b7db79ffa69yyyyyyyyyyyyy
+
+:: 替换Client Secret
+replace.exe .\output_gitee c45605c3d9d96dbf3dab0xxxxxxxxx 2aa3a353f7363fc1e1afacb07871c4dfd7ad88969d942yyyyyyyyyyyyyyyyyy
+
+:: 同步到gitee
+cd output_gitee
+git add . 
+git commit -m &quot;Gridea push&quot;
+git push -u origin master
+
+echo &quot;请到gitee上点更新pages&quot;
+
+pause
+</code></pre>
+<h2 id="主题">主题</h2>
+<p>本博客使用的主题是 Concise <a href="https://www.jianshu.com/p/78e3ee0d8781">https://www.jianshu.com/p/78e3ee0d8781</a>，并做了小部分修改。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li>Gitee pages 官方指导  <a href="https://gitee.com/help/articles/4136#article-header0">https://gitee.com/help/articles/4136#article-header0</a></li>
+<li>Gridea 官方文档 <a href="https://gridea.dev/docs/">https://gridea.dev/docs/</a></li>
+<li>Gridea 上手教程 <a href="https://zhuanlan.zhihu.com/p/71681116">https://zhuanlan.zhihu.com/p/71681116</a></li>
+<li>在 Gridea 中配置 Gitalk 评论系统 <a href="https://wherelse.cc/post/config-gitalk-in-the-gridea/">https://wherelse.cc/post/config-gitalk-in-the-gridea/</a></li>
+<li>Hexo 接入码云评论系统 <a href="https://blog.csdn.net/adobeid/article/details/82261930">https://blog.csdn.net/adobeid/article/details/82261930</a></li>
+</ol>
+
+                <div class="toc-container">
+                    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-gridea">为什么选择 Gridea</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85">如何安装</a></li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E5%88%B0github">同步到github</a></li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E5%88%B0gitee">同步到gitee</a>
+<ul>
+<li><a href="#gitee_initbat">gitee_init.bat</a></li>
+<li><a href="#replacepy">replace.py</a></li>
+<li><a href="#gitee_pushbat">gitee_push.bat</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98">主题</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+
+                </div>
+                
+                    <hr/>
+                    <p class="next-post">下一篇：
+                        <a href="https://qinwanlin.github.io/post/hello-gridea/">
+                                                    <span class="post-title">
+                Hello Gridea&rarr;
+              </span>
+                        </a>
+                    </p>
+                
+                <div class="comment" style="text-align: center;">
+                    
+                        <span id="/post/gridea-github-gitee-blog/" class="leancloud_visitors"
+                              data-flag-title="Gridea + github + gitee 搭建个人博客">
+              <em class="post-meta-item-text">阅读量 </em>
+              <i class="leancloud-visitors-count">loading...</i>
+            </span>
+                    
+
+                    
+                    
+                        <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+    div#vcomments {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2.5%
+    }
+</style>
+
+
+    <div id="vcomments"></div>
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'g7YOvotVryeVhveDCMXHuimp-gzGzoHsz',
+        appKey: 'GMcbRHrEIs29YO7CFgmgtNDW',
+        avatar: 'robohash',
+        pageSize: 10,
+        recordIp: false,
+        placeholder: '你来啦，来说说你的想法',
+        visitor: true,
+    });
+</script>
+
+                    
+                </div>
+            </div>
+        </div>
+</article>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <!-- <li class="list-inline-item">
+              <a href="https://qinwanlin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li> -->
+                </ul>
+                <p class="copyright text-muted">Copyright &copy;<span>qinwanlin</span><br><a
+                            href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="https://qinwanlin.github.io/media/scripts/bootstrap.bundle.min.js"></script>
+<script src="https://qinwanlin.github.io/media/scripts/clean-blog.min.js"></script>
+<script src="//instant.page/3.0.0" type="module" defer
+        integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<style type="text/css">
+    a.back_to_top {
+        text-decoration: none;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background: #f0f0f0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 36px;
+        font-size: 18px;
+        text-align: center;
+        transition-duration: .5s;
+        transition-propety: background-color;
+        display: none
+    }
+
+    a.back_to_top span {
+        color: #888
+    }
+
+    a.back_to_top:hover {
+        cursor: pointer;
+        background: #dfdfdf
+    }
+
+    a.back_to_top:hover span {
+        color: #555
+    }
+
+    @media print, screen and(max-width: 580px) {
+        .back_to_top {
+            display: none !important
+        }
+    }
+</style>
+<a id="back_to_top" href="#" class="back_to_top">
+    <span>▲</span></a>
+<script>
+    $(document).ready((function (_this) {
+        return function () {
+            var bt;
+            bt = $('#back_to_top');
+            if ($(document).width() > 480) {
+                $(window).scroll(function () {
+                    var st;
+                    st = $(window).scrollTop();
+                    if (st > 30) {
+                        return bt.css('display', 'block')
+                    } else {
+                        return bt.css('display', 'none')
+                    }
+                });
+                return bt.click(function () {
+                    $('body,html').animate({
+                            scrollTop: 0
+                        },
+                        800);
+                    return false
+                })
+            }
+        }
+    })(this));
+</script>
+<script src="https://qinwanlin.github.io/media/scripts/tocScript.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="referrer" content="never">
+<meta name="keywords" content="">
+<meta name="description" content="欢迎访问[qinwanlin]的个人博客">
+<meta name="author" content="kveln">
+<title>
+    Qt Creator格式化C++代码 | qinwanlin
+</title>
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/bootstrap.min.css">
+<link href="https://qinwanlin.github.io/media/css/all.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
+<link rel="alternate" type="application/rss+xml" title="Qt Creator格式化C++代码 | qinwanlin » Feed"
+      href="https://qinwanlin.github.io/atom.xml">
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/androidstudio.min.css">
+<link href="https://qinwanlin.github.io/styles/main.css" rel="stylesheet">
+<script src="https://qinwanlin.github.io/media/scripts/jquery.min.js"></script>
+
+<script src="https://qinwanlin.github.io/media/scripts/highlight.min.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+    <meta property="og:description" content="Qt Creator格式化C++代码"/>
+    <meta property="og:url" content="https://qinwanlin.github.io/post/qt-creator-ge-shi-hua-cdai-ma/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="qinwanlin"/>
+    <!-- <script src="../assets/styles/scripts/tocScript.js"></script> -->
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead" style="background-image: url('https://qinwanlin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                    <!-- 没Title为其他页面Header -->
+                    
+                        <!-- 没Title并且有headerType为Post：文章Header -->
+                        <div class="post-heading">
+              <span class="tags">
+                  
+                      <a href="https://qinwanlin.github.io/tag/UKSTEY-gX/" class="tag">clang-format</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/GRCe8lfzKv/" class="tag">qt</a>
+                  
+              </span>
+                            <h1>Qt Creator格式化C++代码</h1>
+                            <span class="meta">
+                Posted on
+                2022-09-23，13 min read
+              </span>
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article id="post-content-article">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto post-content-container">
+                
+                    <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/qt-creator-ge-shi-hua-cdai-ma.jpg" alt="封面图">
+                    </img>
+                
+                <p>因为代码由多人合作开发，且代码格式风格各异，导致同一项目，甚至同一个源文件中，代码风格都各不同。为了更好阅读、修改代码，尽可能做到统一代码风格，因此引入QT Creator 插件和clang-format来实现此目标。</p>
+<!-- more -->
+<p>本文主要介绍如何在ubuntu20.04平台的Qt Creator中使用快捷键格式化C/C++代码。主要包括几个步骤<br>
+（1）安装clang-format-15<br>
+（2）安装和配置Qt Creator插件Beautifier<br>
+（3）配置格式化快捷键</p>
+<h2 id="安装clang-format-15">安装clang-format-15</h2>
+<p>clang-format 是 Clang 编译器中的一个工具，可以方便的自动规范多种语言的格式，使得不同人写的代码有统一的编码格式，方便团队代码的统一管理以及后期的代码审核。</p>
+<p>为什么使用clang-format，而不是Qt Creator自身的格式化工具？<br>
+主要是clang-format可跨平台，支持不同的IDE，支持不同的语言，可配置的格式丰富，一套格式走天下。</p>
+<p>ubuntu20.04本身自带的clang-format的版本是10，版本偏低，不支持使用最新的格式。本文安装的是clang-format-15，步骤如下：</p>
+<p>（1）获取key</p>
+<pre><code class="language-bash">wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - 
+</code></pre>
+<p>（2）在 <code>/etc/apt/sources.list</code>配置源</p>
+<pre><code class="language-bash">deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main
+deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main
+</code></pre>
+<p>（3）安装clang-format-15</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install clang-format-15
+</code></pre>
+<h2 id="安装和配置qt-creator插件beautifier">安装和配置Qt Creator插件Beautifier</h2>
+<p>（1）菜单栏-帮助-关于插件，勾选插件Beautifier，然后重启Qt Creator。<br>
+<img src="https://qinwanlin.github.io/post-images/1663898975858.png" alt="" loading="lazy"></p>
+<p>（2）重启完毕后，菜单栏-工具-选项，即可看到Beautifier选项框，配置如下。格式模板见附件<br>
+<img src="https://qinwanlin.github.io/post-images/1663898986675.png" alt="" loading="lazy"></p>
+<h2 id="配置格式化快捷键">配置格式化快捷键</h2>
+<p>可以按个人喜好配置快捷键，如下图，使用Alt+L格式化当选行或选择的代码块，使用Ctrl+Shift+L格式化当前文件。<br>
+<img src="https://qinwanlin.github.io/post-images/1663899023269.png" alt="" loading="lazy"></p>
+<h2 id="使用建议">使用建议</h2>
+<p>（1）只在新增源文件时使用全文件格式化，旧文件不建议使用全文件格式化，不利于代码版本跟踪。<br>
+（2）修改代码、新增代码时，建议使用代码块格式化，逐步达到代码统一格式。</p>
+<h2 id="格式模板">格式模板</h2>
+<p>以下是以 Microsoft 是模板，并结合个人风格习惯来定制的代码格式</p>
+<pre><code class="language-bash"># https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# https://www.bbsmax.com/A/VGzlMjexJb/
+
+# 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto
+Language: Cpp
+
+BasedOnStyle: Microsoft
+
+# 访问说明符(public、private等)的偏移，-4与类名对齐
+AccessModifierOffset: -4
+
+# 左括号(左圆括号、左尖括号、左方括号)后的参数对齐: Align, DontAlign, AlwaysBreak(总是在左括号后换行)
+AlignAfterOpenBracket: Align
+
+# 在对结构数组使用初始化时，将字段对齐到列中 Left Right None
+AlignArrayOfStructures: Left
+
+# 连续赋值时，对齐所有等号
+AlignConsecutiveAssignments: true
+
+# 对齐连续位的样式 连续位域时，对齐所有冒号
+AlignConsecutiveBitFields: true
+
+# 连续声明时，对齐所有声明的变量名
+AlignConsecutiveDeclarations: true
+
+# 对齐连续位域字段的风格
+# AlignConsecutiveBitFields: AcrossEmptyLinesAndComments
+
+# 对齐连续宏定义的风格
+#AlignConsecutiveMacros: Consecutive  #clang-format 12
+
+# 用于在使用反斜杠换行中对齐反斜杠的选项
+AlignEscapedNewlines: Left
+
+# 水平对齐二元和三元表达式的操作数
+AlignOperands: true
+
+# 对齐连续的尾随的注释
+AlignTrailingComments: true
+
+# 如果函数调用或带括号的初始化列表不适合全部在一行时
+# 允许将所有参数放到下一行，即使BinPackArguments为false
+AllowAllArgumentsOnNextLine: true
+
+# 允许构造函数的初始化参数放在下一行
+AllowAllConstructorInitializersOnNextLine: true
+
+# 允许函数声明的所有参数在放在下一行
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# 允许短的块放在同一行(Always 总是将短块合并成一行，Empty 只合并空块)
+AllowShortBlocksOnASingleLine: Empty
+
+# 允许短的case标签放在同一行
+AllowShortCaseLabelsOnASingleLine: false
+
+# 允许短的枚举在同一行
+AllowShortEnumsOnASingleLine: false   # V11
+
+# 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+# 允许短的if语句保持在同一行
+AllowShortIfStatementsOnASingleLine: Never
+
+# 允许短的Lambda表达式保持在同一行，Inline(做为函数参数时) Empty
+AllowShortLambdasOnASingleLine: Empty
+
+# 允许短的循环保持在同一行
+AllowShortLoopsOnASingleLine: false
+
+# 总是在定义返回类型后换行(deprecated)
+AlwaysBreakAfterDefinitionReturnType: None
+
+# 总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数),
+#   AllDefinitions(所有的定义，不包括声明), TopLevelDefinitions(所有的顶级函数的定义)
+
+# 函数声明返回类型后是否换行(None 自动，All全部，TopLevel...)
+AlwaysBreakAfterReturnType: None
+
+# 总是在多行string字面量前换行
+AlwaysBreakBeforeMultilineStrings: false
+
+# 总是在template声明后换行
+AlwaysBreakTemplateDeclarations: Yes
+
+# false表示函数实参要么都在同一行，要么都各自一行
+BinPackArguments: true
+
+# false表示所有形参要么都在同一行，要么都各自一行
+BinPackParameters: true
+
+# 位域的冒号左右是否有空格 Both None Before After
+BitFieldColonSpacing: Both
+
+# 大括号换行，只有当 BreakBeforeBraces 设置为Custom时才有效
+BraceWrapping:
+  # case 语句后面
+  AfterCaseLabel: true
+  # class定义后面
+  AfterClass: true
+  # 控制语句后面
+  AfterControlStatement: true
+  # enum定义后面
+  AfterEnum: true
+  # 函数定义后面
+  AfterFunction: true
+  # 命名空间定义后面
+  AfterNamespace: true
+  # ObjC定义后面
+  AfterObjCDeclaration: false
+  # struct定义后面
+  AfterStruct: true
+  # union定义后面
+  AfterUnion: true
+  # extern 导出块后面
+  AfterExternBlock: true
+  # catch之前
+  BeforeCatch: true
+  # else之前
+  BeforeElse: true
+  # lambda表达式的执行体前
+  BeforeLambdaBody: false
+  # do-while的while前
+  BeforeWhile: false
+  # 缩进大括号(整个大括号框起来的部分都缩进)
+  IndentBraces: false
+  # 空函数的大括号是否分开，true(分开)
+  SplitEmptyFunction: true
+  # 空记录体(struct/class/union)的大括号是否分开，true(分开)
+  SplitEmptyRecord: true
+  # 空名字空间的大括号是否分开，true(分开)
+  SplitEmptyNamespace: true
+
+# 在二元运算符前换行: None(在操作符后换行), NonAssignment(在非赋值的操作符前换行), All(在操作符前换行)
+BreakBeforeBinaryOperators: All
+
+# 在大括号前换行: Attach(始终将大括号附加到周围的上下文), Linux(除函数、命名空间和类定义，与Attach类似),
+#   Mozilla(除枚举、函数、记录定义，与Attach类似), Stroustrup(除函数定义、catch、else，与Attach类似),
+#   Allman(总是在大括号前换行), GNU(总是在大括号前换行，并对于控制语句的大括号增加额外的缩进), WebKit(在函数前换行), Custom
+#   注：这里认为语句块也属于函数
+
+# 大括号的换行规则
+BreakBeforeBraces: Custom
+
+# 三元运算操作符换行位置（?和: 在新行还是尾部）
+BreakBeforeTernaryOperators: true
+
+# 在构造函数的初始化列表的逗号前换行
+BreakConstructorInitializersBeforeComma: false
+
+# 要使用的构造函数初始化式样式
+BreakConstructorInitializers: BeforeColon
+
+# 类声明时基类的样式
+BreakInheritanceList: BeforeColon
+
+# 是否允许字符串字面值换行
+BreakStringLiterals: true
+
+# 每行字符的限制，0表示没有限制
+ColumnLimit: 0
+
+# 描述具有特殊意义的注释的正则表达式，它不应该被分割为多行或以其它方式改变
+# CommentPragmas: ''
+
+# 如果为true，则连续的名称空间声明将在同一行上。如果为false，则在新行上声明每个名称空间。
+CompactNamespaces: false
+
+# 构造函数的初始化列表要么都在同一行，要么都各自一行
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+
+# 构造函数的初始化列表的缩进宽度
+ConstructorInitializerIndentWidth:  4
+
+# 延续的行的缩进宽度
+ContinuationIndentWidth: 4
+
+# 去除C++11的列表初始化的大括号{后和}前的空格
+Cpp11BracedListStyle: true
+
+# 继承当前文档的换行方式（\r\n 或 \n）
+DeriveLineEnding: true
+
+# 继承当前文档的最常用的指针和引用的对齐方式
+DerivePointerAlignment: false
+
+# 关闭格式化
+DisableFormat: false
+
+# 在访问控制(public private protected)后是否有空行，Never Leave Always
+EmptyLineAfterAccessModifier: Leave
+
+# 在访问控制(public private protected)前是否有空行，Never Leave Always
+EmptyLineBeforeAccessModifier: Always
+
+# 自动检测函数的调用和定义是否被格式为每行一个参数(Experimental)
+ExperimentalAutoDetectBinPacking: false
+
+# 如果为true，则clang格式会为短名称空间添加缺少的名称空间结尾注释，并修复无效的现有名称结束注释
+FixNamespaceComments: true
+
+# 需要被解读为foreach循环而不是函数调用的宏
+ForEachMacros:  [ foreach, Q_FOREACH, BOOST_FOREACH ]
+
+# 头文件排序与分组，Preserve(各块单独排序)，Merge(合到一起排序)，Regroup(一起排序，再分组)
+IncludeBlocks: Regroup
+
+# 对#include进行排序，匹配了某正则表达式的#include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX(优先级越小排序越靠前)，
+#   可以定义负数优先级从而保证某些#include永远在最前面
+IncludeCategories:
+  - Regex:  '^&quot;(llvm|llvm-c|clang|clang-c)/'
+    Priority:   2
+  - Regex:  '^(&lt;|&quot;(gtest|isl|json)/)'
+    Priority:   3
+  - Regex:  '.*'
+    Priority:   1
+
+# 缩进访问控制关键字(public private protected)
+IndentAccessModifiers: false   #v13
+
+# 缩进case块
+IndentCaseBlocks: false    #v11
+
+# 缩进case标签
+IndentCaseLabels: false
+
+# extern块时否缩进
+IndentExternBlock: NoIndent  #v11
+
+# goto标签是否缩进
+IndentGotoLabels: false  #v10
+
+# 要使用的预处理器指令缩进样式 BeforeHash/AfterHash
+IndentPPDirectives: BeforeHash
+
+# 缩进宽度
+IndentWidth: 4
+
+# 在控制块后插入大括号 (if, else, for, do, and while)
+InsertBraces: true   # V15
+
+# 函数返回类型换行时，缩进函数声明或函数定义的函数名
+IndentWrappedFunctionNames: false
+
+# 保留在块开始处的空行
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+#lambda表达式执行块的对齐方式
+LambdaBodyIndentation: Signature  #V13
+
+# 开始一个块的宏的正则表达式
+MacroBlockBegin: ''
+
+# 结束一个块的宏的正则表达式
+MacroBlockEnd: ''
+
+# 连续空行的最大数量
+MaxEmptyLinesToKeep: 5
+
+# 命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
+# NamespaceIndentation: Inner
+
+# 初始化列表参数的格式，Never BinPack CurrentLine(当前行放不下，就每个参数一行) NextLine(当前行放不下就尝试下一行，否则每个参数一行)
+PackConstructorInitializers: CurrentLine #v14
+
+# 使用ObjC块时缩进宽度
+ObjCBlockIndentWidth: 4
+
+# 在ObjC的@property后添加一个空格
+ObjCSpaceAfterProperty: false
+
+# 在ObjC的protocol列表前添加一个空格
+ObjCSpaceBeforeProtocolList: true
+
+# 在call(后对函数调用换行的penalty
+PenaltyBreakBeforeFirstCallParameter: 2
+
+# 在一个注释中引入换行的penalty
+PenaltyBreakComment: 300
+
+# 第一次在&lt;&lt;前换行的penalty
+PenaltyBreakFirstLessLess:  160
+
+# 在一个字符串字面量中引入换行的penalty
+PenaltyBreakString: 1000
+
+# 对于每个在行字符数限制之外的字符的penalty
+PenaltyExcessCharacter: 1000000
+
+# 对每一个空格缩进字符的penalty(相对于前导的非空格列计算)
+# PenaltyIndentedWhitespace: 0
+
+# 将函数的返回类型放到它自己的行的penalty
+PenaltyReturnTypeOnItsOwnLine: 160
+
+# 指针的对齐: Left, Right, Middle
+PointerAlignment: Left
+
+# 引用的对齐
+ReferenceAlignment: Left  #V14
+
+# 限定符的对齐方式(inline, static, const等)
+QualifierAlignment: Left  #V14
+
+# 使用空行分隔各块，classes, structs, enums, and functions
+SeparateDefinitionBlocks: Always #V14
+
+# 短命名空间的最大行数，超过指定行数会在后面加上namespace xx
+ShortNamespaceLines: 5
+
+# 允许重新排版注释
+ReflowComments: true
+
+# 排序#include，忽略大小写
+SortIncludes: CaseInsensitive
+
+# 允许排序 using 声明顺序
+SortUsingDeclarations: false
+
+# 在C风格类型转换后添加空格
+SpaceAfterCStyleCast: false
+
+# 在逻辑非操作符(!)之后插入一个空格
+SpaceAfterLogicalNot: false
+
+# 在 template 关键字后插入一个空格
+SpaceAfterTemplateKeyword: false
+
+# 定义在什么情况下在指针限定符之前或之后放置空格 Default Before After Both
+SpaceAroundPointerQualifiers: Default  #v12
+
+# 在赋值运算符之前添加空格
+SpaceBeforeAssignmentOperators: true
+
+# case冒号前是否有空格
+SpaceBeforeCaseColon: false #v12
+
+# 构造函数初始化列表的冒号前是否有空格
+SpaceBeforeCtorInitializerColon: true
+
+# 左圆括号之前添加一个空格: Never, ControlStatements(for/if/while...), Always
+SpaceBeforeParens: ControlStatements
+
+# 空格将在基于范围的for循环冒号之前被删除
+SpaceBeforeRangeBasedForLoopColon: true
+
+# [ 前是否添加空格（数组名和[之间，Lambdas不会受到影响）
+# 连续多个 [ 只考虑第一个（嵌套数组，多维数组）
+SpaceBeforeSquareBrackets: false
+
+# 空块{}之间是否有空格
+SpaceInEmptyBlock: false  #v10
+
+# 在空的圆括号()中添加空格
+SpaceInEmptyParentheses: false
+
+# 在尾随的评论前添加的空格数(只适用于//)
+SpacesBeforeTrailingComments: 4
+
+# 在尖括号的&lt;后和&gt;前添加空格
+SpacesInAngles: false
+
+# 在容器(ObjC和JavaScript的数组和字典等)字面量中添加空格
+SpacesInContainerLiterals: false
+
+# 一行注释的开头允许有多少空格
+SpacesInLineCommentPrefix:
+  Minimum: 1  #最少一个
+  Maximum: 1  #最多一个
+
+# 在C风格类型转换的括号中添加空格
+SpacesInCStyleCastParentheses: false
+
+# 如果为true，将在If/for/switch/while条件括号前后插入空格。
+SpacesInConditionalStatement: false
+
+# 在圆括号的(后和)前添加空格
+SpacesInParentheses: false
+
+# 在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
+SpacesInSquareBrackets: false
+
+# 标准: Cpp03, Cpp11, Auto
+Standard: Cpp11
+
+# 忽略一些声明变量对齐，如QT的emit，避免被对齐
+StatementAttributeLikeMacros: [emit, Q_EMIT]    #V12
+
+# tab宽度
+TabWidth: 4
+
+# 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
+UseTab: Never
+
+</code></pre>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><a href="https://clang.llvm.org/docs/ClangFormatStyleOptions.html">Clang-Format Style Options</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/453222522">使用 clang-format 格式化代码</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/sinat_34986308/article/details/116116780">Ubuntu下安装高版本clang-format</a></p>
+</li>
+</ul>
+
+                <div class="toc-container">
+                    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85clang-format-15">安装clang-format-15</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AEqt-creator%E6%8F%92%E4%BB%B6beautifier">安装和配置Qt Creator插件Beautifier</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%BF%AB%E6%8D%B7%E9%94%AE">配置格式化快捷键</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE">使用建议</a></li>
+<li><a href="#%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF">格式模板</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+
+                </div>
+                
+                    <hr/>
+                    <p class="next-post">下一篇：
+                        <a href="https://qinwanlin.github.io/post/ubuntu2004-an-zhuang-ros2/">
+                                                    <span class="post-title">
+                ubuntu20.04安装ros2&rarr;
+              </span>
+                        </a>
+                    </p>
+                
+                <div class="comment" style="text-align: center;">
+                    
+                        <span id="/post/qt-creator-ge-shi-hua-cdai-ma/" class="leancloud_visitors"
+                              data-flag-title="Qt Creator格式化C++代码">
+              <em class="post-meta-item-text">阅读量 </em>
+              <i class="leancloud-visitors-count">loading...</i>
+            </span>
+                    
+
+                    
+                    
+                        <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+    div#vcomments {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2.5%
+    }
+</style>
+
+
+    <div id="vcomments"></div>
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'g7YOvotVryeVhveDCMXHuimp-gzGzoHsz',
+        appKey: 'GMcbRHrEIs29YO7CFgmgtNDW',
+        avatar: 'robohash',
+        pageSize: 10,
+        recordIp: false,
+        placeholder: '你来啦，来说说你的想法',
+        visitor: true,
+    });
+</script>
+
+                    
+                </div>
+            </div>
+        </div>
+</article>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <!-- <li class="list-inline-item">
+              <a href="https://qinwanlin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li> -->
+                </ul>
+                <p class="copyright text-muted">Copyright &copy;<span>qinwanlin</span><br><a
+                            href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="https://qinwanlin.github.io/media/scripts/bootstrap.bundle.min.js"></script>
+<script src="https://qinwanlin.github.io/media/scripts/clean-blog.min.js"></script>
+<script src="//instant.page/3.0.0" type="module" defer
+        integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<style type="text/css">
+    a.back_to_top {
+        text-decoration: none;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background: #f0f0f0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 36px;
+        font-size: 18px;
+        text-align: center;
+        transition-duration: .5s;
+        transition-propety: background-color;
+        display: none
+    }
+
+    a.back_to_top span {
+        color: #888
+    }
+
+    a.back_to_top:hover {
+        cursor: pointer;
+        background: #dfdfdf
+    }
+
+    a.back_to_top:hover span {
+        color: #555
+    }
+
+    @media print, screen and(max-width: 580px) {
+        .back_to_top {
+            display: none !important
+        }
+    }
+</style>
+<a id="back_to_top" href="#" class="back_to_top">
+    <span>▲</span></a>
+<script>
+    $(document).ready((function (_this) {
+        return function () {
+            var bt;
+            bt = $('#back_to_top');
+            if ($(document).width() > 480) {
+                $(window).scroll(function () {
+                    var st;
+                    st = $(window).scrollTop();
+                    if (st > 30) {
+                        return bt.css('display', 'block')
+                    } else {
+                        return bt.css('display', 'none')
+                    }
+                });
+                return bt.click(function () {
+                    $('body,html').animate({
+                            scrollTop: 0
+                        },
+                        800);
+                    return false
+                })
+            }
+        }
+    })(this));
+</script>
+<script src="https://qinwanlin.github.io/media/scripts/tocScript.js"></script>
+</body>
+
+</html>

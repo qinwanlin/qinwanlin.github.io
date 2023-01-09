@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="referrer" content="never">
+<meta name="keywords" content="">
+<meta name="description" content="欢迎访问[qinwanlin]的个人博客">
+<meta name="author" content="kveln">
+<title>
+    ubuntu20.04编译安装boost1.78.0 | qinwanlin
+</title>
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/bootstrap.min.css">
+<link href="https://qinwanlin.github.io/media/css/all.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
+<link rel="alternate" type="application/rss+xml" title="ubuntu20.04编译安装boost1.78.0 | qinwanlin » Feed"
+      href="https://qinwanlin.github.io/atom.xml">
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/androidstudio.min.css">
+<link href="https://qinwanlin.github.io/styles/main.css" rel="stylesheet">
+<script src="https://qinwanlin.github.io/media/scripts/jquery.min.js"></script>
+
+<script src="https://qinwanlin.github.io/media/scripts/highlight.min.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+    <meta property="og:description" content="ubuntu20.04编译安装boost1.78.0"/>
+    <meta property="og:url" content="https://qinwanlin.github.io/post/ubuntu2004-bian-yi-an-zhuang-boost1780/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="qinwanlin"/>
+    <!-- <script src="../assets/styles/scripts/tocScript.js"></script> -->
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead" style="background-image: url('https://qinwanlin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                    <!-- 没Title为其他页面Header -->
+                    
+                        <!-- 没Title并且有headerType为Post：文章Header -->
+                        <div class="post-heading">
+              <span class="tags">
+                  
+                      <a href="https://qinwanlin.github.io/tag/oXhos2rjD/" class="tag">boost</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/8GWr0DmH16/" class="tag">ldconfig</a>
+                  
+              </span>
+                            <h1>ubuntu20.04编译安装boost1.78.0</h1>
+                            <span class="meta">
+                Posted on
+                2022-08-23，3 min read
+              </span>
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article id="post-content-article">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto post-content-container">
+                
+                    <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/ubuntu2004-bian-yi-an-zhuang-boost1780.png" alt="封面图">
+                    </img>
+                
+                <p>ubuntu20.04可以通过apt安装boost，自带的boost版本是1.71.0。因为需要使用指定版本，所以需要手动编译和安装。</p>
+<!-- more -->
+<h2 id="apt安装boost">apt安装boost</h2>
+<p>使用命令 <code>sudo apt install libboost-all-dev</code> 即可，以下介绍编译安装指定版本。</p>
+<h2 id="下载boost">下载boost</h2>
+<p>可在boost官网下载最新版本，也可以在 sourceforge 中下载到旧版本。可直接使用浏览器下载，或wget下载。下载完后，解压，再进到目录内操作。</p>
+<pre><code class="language-bash">wget https://udomain.dl.sourceforge.net/project/boost/boost/1.78.0/boost_1_78_0.tar.gz
+</code></pre>
+<h2 id="编译和安装">编译和安装</h2>
+<p>一般而言，编译安装到本地不需要做任何配置，直接运行脚本即可，也可以进行一些特定的配置。</p>
+<pre><code class="language-bash"># 配置和检查，也可以配置编译哪些库、编译工具集、安装目录
+./bootstrap.sh
+# 或
+./bootstrap.sh --with-libraries=all --with-toolset=gcc --prefix=/usr/local/boost_1_78_0
+
+# 编译boost库
+./b2
+
+#安装boost库，也可以在此时指定安装目录
+./b2 install
+# 或
+./b2 install --prefix=/usr/local
+</code></pre>
+<h2 id="配置库路径">配置库路径</h2>
+<p>上一步安装完后只是把头文件和库拷贝到指定目录，程序链接时还是找不到库的。有几种方法使链接时找到boost库。</p>
+<h3 id="方法一">方法一</h3>
+<p>如果是安装到 <code>/lib</code> 或 <code>/usr/lib</code> 或  <code>/usr/local/lib/</code> 目录，可以直接调用 <code>sudo ldconfig</code> ，相当于刷新一下缓存 <code>/etc/ld.so.cache</code> 。</p>
+<h3 id="方法二">方法二</h3>
+<p>如果是安装到一个指定目录，可以往配置文件 <code>/etc/ld.so.conf</code> 中追加配置项，也可以在 <code>/etc/ld.so.conf.d/</code> 目录下新增一个配置文件。</p>
+<pre><code class="language-bash"># 追加配置项
+sudo sh -c 'echo &quot;/usr/local/boost_1_78_0/lib&quot; &gt;&gt; /etc/ld.so.conf'
+# 或新增配置文件
+sudo sh -c 'sudo echo &quot;/usr/local/boost_1_78_0/lib&quot; &gt; /etc/ld.so.conf.d/boost_1_78_0.conf'
+sudo ldconfig
+</code></pre>
+<h3 id="方法三">方法三</h3>
+<p>也可以把库路径添加环境变量LD_LIBRARY_PATH中。可临时添加，也可以保存到配置文件中。</p>
+<pre><code class="language-bash">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/boost_1_78_0/lib
+</code></pre>
+<h2 id="参考">参考</h2>
+<p>https://www.cnblogs.com/my-show-time/p/15250435.html<br>
+https://blog.csdn.net/winycg/article/details/80572735</p>
+
+                <div class="toc-container">
+                    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#apt%E5%AE%89%E8%A3%85boost">apt安装boost</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BDboost">下载boost</a></li>
+<li><a href="#%E7%BC%96%E8%AF%91%E5%92%8C%E5%AE%89%E8%A3%85">编译和安装</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E5%BA%93%E8%B7%AF%E5%BE%84">配置库路径</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80">方法一</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C">方法二</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%89">方法三</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+
+                </div>
+                
+                    <hr/>
+                    <p class="next-post">下一篇：
+                        <a href="https://qinwanlin.github.io/post/get_bing_wallpaper/">
+                                                    <span class="post-title">
+                如何每天获取 bing 超高清版壁纸&rarr;
+              </span>
+                        </a>
+                    </p>
+                
+                <div class="comment" style="text-align: center;">
+                    
+                        <span id="/post/ubuntu2004-bian-yi-an-zhuang-boost1780/" class="leancloud_visitors"
+                              data-flag-title="ubuntu20.04编译安装boost1.78.0">
+              <em class="post-meta-item-text">阅读量 </em>
+              <i class="leancloud-visitors-count">loading...</i>
+            </span>
+                    
+
+                    
+                    
+                        <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+    div#vcomments {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2.5%
+    }
+</style>
+
+
+    <div id="vcomments"></div>
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'g7YOvotVryeVhveDCMXHuimp-gzGzoHsz',
+        appKey: 'GMcbRHrEIs29YO7CFgmgtNDW',
+        avatar: 'robohash',
+        pageSize: 10,
+        recordIp: false,
+        placeholder: '你来啦，来说说你的想法',
+        visitor: true,
+    });
+</script>
+
+                    
+                </div>
+            </div>
+        </div>
+</article>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <!-- <li class="list-inline-item">
+              <a href="https://qinwanlin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li> -->
+                </ul>
+                <p class="copyright text-muted">Copyright &copy;<span>qinwanlin</span><br><a
+                            href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="https://qinwanlin.github.io/media/scripts/bootstrap.bundle.min.js"></script>
+<script src="https://qinwanlin.github.io/media/scripts/clean-blog.min.js"></script>
+<script src="//instant.page/3.0.0" type="module" defer
+        integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<style type="text/css">
+    a.back_to_top {
+        text-decoration: none;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background: #f0f0f0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 36px;
+        font-size: 18px;
+        text-align: center;
+        transition-duration: .5s;
+        transition-propety: background-color;
+        display: none
+    }
+
+    a.back_to_top span {
+        color: #888
+    }
+
+    a.back_to_top:hover {
+        cursor: pointer;
+        background: #dfdfdf
+    }
+
+    a.back_to_top:hover span {
+        color: #555
+    }
+
+    @media print, screen and(max-width: 580px) {
+        .back_to_top {
+            display: none !important
+        }
+    }
+</style>
+<a id="back_to_top" href="#" class="back_to_top">
+    <span>▲</span></a>
+<script>
+    $(document).ready((function (_this) {
+        return function () {
+            var bt;
+            bt = $('#back_to_top');
+            if ($(document).width() > 480) {
+                $(window).scroll(function () {
+                    var st;
+                    st = $(window).scrollTop();
+                    if (st > 30) {
+                        return bt.css('display', 'block')
+                    } else {
+                        return bt.css('display', 'none')
+                    }
+                });
+                return bt.click(function () {
+                    $('body,html').animate({
+                            scrollTop: 0
+                        },
+                        800);
+                    return false
+                })
+            }
+        }
+    })(this));
+</script>
+<script src="https://qinwanlin.github.io/media/scripts/tocScript.js"></script>
+</body>
+
+</html>

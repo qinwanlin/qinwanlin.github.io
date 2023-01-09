@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="referrer" content="never">
+<meta name="keywords" content="">
+<meta name="description" content="欢迎访问[qinwanlin]的个人博客">
+<meta name="author" content="kveln">
+<title>
+    内存泄露检测工具VLD的使用 | qinwanlin
+</title>
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/bootstrap.min.css">
+<link href="https://qinwanlin.github.io/media/css/all.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
+<link rel="alternate" type="application/rss+xml" title="内存泄露检测工具VLD的使用 | qinwanlin » Feed"
+      href="https://qinwanlin.github.io/atom.xml">
+<link rel="stylesheet" href="https://qinwanlin.github.io/media/css/androidstudio.min.css">
+<link href="https://qinwanlin.github.io/styles/main.css" rel="stylesheet">
+<script src="https://qinwanlin.github.io/media/scripts/jquery.min.js"></script>
+
+<script src="https://qinwanlin.github.io/media/scripts/highlight.min.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+    <meta property="og:description" content="内存泄露检测工具VLD的使用"/>
+    <meta property="og:url" content="https://qinwanlin.github.io/post/memory_leakage_vld/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="qinwanlin"/>
+    <!-- <script src="../assets/styles/scripts/tocScript.js"></script> -->
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="https://qinwanlin.github.io">qinwanlin</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/">首页</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/archives">归档</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/tags">标签</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="https://qinwanlin.github.io/post/resource">资源</a>
+                        
+                    </li>
+                
+                    <li class="nav-item">
+                        
+                            <a class="nav-link" href="/about">关于</a>
+                        
+                    </li>
+                
+                <li class="nav-item">
+                    <div class="gridea-search-container">
+                        <form id="gridea-search-form" style="position: relative" data-update="1673231289117"
+                              action="/search/index.html">
+                            <input class="search-input" autocomplete="off" spellcheck="false" name="q"
+                                   placeholder="搜索文章"/>
+                            <i class="fas fa-search gt-c-content-color-first"
+                               style="position: absolute; top: 9px; left: 10px;"></i>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead" style="background-image: url('https://qinwanlin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                    <!-- 没Title为其他页面Header -->
+                    
+                        <!-- 没Title并且有headerType为Post：文章Header -->
+                        <div class="post-heading">
+              <span class="tags">
+                  
+                      <a href="https://qinwanlin.github.io/tag/1gJ54TQxD/" class="tag">VLD</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/ziEj-RPNta/" class="tag">内存泄漏</a>
+                  
+                      <a href="https://qinwanlin.github.io/tag/GguCW6lqx/" class="tag">开发工具</a>
+                  
+              </span>
+                            <h1>内存泄露检测工具VLD的使用</h1>
+                            <span class="meta">
+                Posted on
+                2022-03-25，6 min read
+              </span>
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<article id="post-content-article">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto post-content-container">
+                
+                    <img class="post-feature-header-image" src="https://qinwanlin.github.io/post-images/memory_leakage_vld.jpg" alt="封面图">
+                    </img>
+                
+                <p>C/C++ 程序越复杂，内存的管理显得越重要，稍有不慎就会出现泄漏。如果内存泄漏不是很严重，在短时间内对程序不会有太大影响，这也使得内存泄漏问题有很强的隐蔽性，不易被发现。然而不管内存泄漏多么轻微，当程序长时间运行时，其破坏力是惊人的 - 从性能下降到内存耗尽，甚至会影响其他程序的正常运行。</p>
+<!-- more -->
+<h2 id="vld">VLD</h2>
+<p>VLD（Visual Leak Detector）是一款用于 Visual C++ 的免费内存泄露检测工具。<br>
+相比较其它内存泄露检测工具，它在检测到内存泄漏的同时，还具有如下特点：</p>
+<blockquote>
+<ul>
+<li>可以得到内存泄漏点的调用堆栈，如果可以的话，还能得到其所在文件及行号；</li>
+<li>可以得到泄露内存的完整数据；</li>
+<li>可以设置内存泄露报告的级别；</li>
+<li>它是一个已经打包的 lib，使用时无须编译源码。对于使用者自己的代码，只需要做很小的改动；</li>
+<li>源码使用 GNU 许可发布，并有详尽的文档及注释。对于想深入了解堆内存管理的读者，是一个不错的选择。</li>
+</ul>
+</blockquote>
+<p>可见，VLD 简单易用。只需要做很小的改动（添加库并包含头文件），然后正常运行自己的程序，就可以发现内存问题；如果深入源码，可以学习到堆内存分配与释放的原理、内存泄漏检测的原理及内存操作的常用技巧等。</p>
+<p>本人测试系统是 Win10， 测试过 VS2017、2019、2022，都是可以使用 VLD的，以下简单记录一下安装以及使用过程。</p>
+<h2 id="安装">安装</h2>
+<p>VLD 下载地址：<a href="https://kinddragon.github.io/vld/">https://kinddragon.github.io/vld/</a>，当前最新版本是 vld-2.5.1-setup.exe，下载完成后，双击进行安装即可。在安装目录下会有相应的 include 和 lib 目录。</p>
+<figure data-type="image" tabindex="1"><img src="https://qinwanlin.github.io/post-images/1648430034461.png" alt="缺失图片" title="目录图" loading="lazy"></figure>
+<p>安装完成后，大部分现有项目以及新建的项目，会自动添加其 include 目录添加到 VS 的附加安装目录，将其 lib 目录添加到 VS 的附加库目录，而无需手动添加。</p>
+<h2 id="为什么能自动添加-include-和-lib-目录">为什么能自动添加 include 和 lib 目录</h2>
+<p>安装 VLD 时会把相应的 include 和 lib 目录，添加到 VS 的全局属性配置文件中。本人的配置文件路径是：C:\Users\Administrator\AppData\Local\Microsoft\MSBuild\v4.0，</p>
+<figure data-type="image" tabindex="2"><img src="https://qinwanlin.github.io/post-images/1648431278960.png" alt="缺失图片" loading="lazy"></figure>
+<p>我们打开 Microsoft.Cpp.Win32.user.props 会看到 VLD 的 include 和 lib 目录已经添加到 AdditionalIncludeDirectories 和 AdditionalLibraryDirectories 属性中。</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Project DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+	&lt;ImportGroup Label=&quot;PropertySheets&quot;&gt;&lt;/ImportGroup&gt;
+	&lt;PropertyGroup Label=&quot;UserMacros&quot; /&gt;
+	&lt;PropertyGroup /&gt;
+	&lt;ItemDefinitionGroup&gt;
+		&lt;ClCompile&gt;
+			&lt;AdditionalIncludeDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)&lt;/AdditionalIncludeDirectories&gt;
+		&lt;/ClCompile&gt;
+		&lt;Link&gt;
+			&lt;AdditionalLibraryDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\lib\Win32;%(AdditionalLibraryDirectories)&lt;/AdditionalLibraryDirectories&gt;
+		&lt;/Link&gt;
+		&lt;Lib&gt;
+			&lt;AdditionalLibraryDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\lib\Win32;%(AdditionalLibraryDirectories)&lt;/AdditionalLibraryDirectories&gt;
+		&lt;/Lib&gt;
+	&lt;/ItemDefinitionGroup&gt;
+	&lt;ItemGroup /&gt;
+&lt;/Project&gt;
+</code></pre>
+<p>再看项目的属性配置，只要勾选了“从父级或项目默认设置继承”，就可看到继承的值中有 VLD 的 include 或 lib 目录。</p>
+<figure data-type="image" tabindex="3"><img src="https://qinwanlin.github.io/post-images/1648431740579.png" alt="缺失图片" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://qinwanlin.github.io/post-images/1648432117301.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="为什么现有的项目没有自动添加-include-和-lib-目录">为什么现有的项目没有自动添加 include 和 lib 目录</h2>
+<p>大概率的原因是项目没有包含全局的属性文件 Microsoft.Cpp.Win32.user.props 或 Microsoft.Cpp.x64.user.props 。添加的方法如下：</p>
+<h3 id="打开属性管理器">打开属性管理器</h3>
+<figure data-type="image" tabindex="5"><img src="https://qinwanlin.github.io/post-images/1648432449496.png" alt="缺失图片" loading="lazy"></figure>
+<h3 id="添加全局属性文件">添加全局属性文件</h3>
+<figure data-type="image" tabindex="6"><img src="https://qinwanlin.github.io/post-images/1648432571771.png" alt="缺失图片" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://qinwanlin.github.io/post-images/1648432676356.png" alt="缺失图片" loading="lazy"></figure>
+<h3 id="手动编辑工程文件">手动编辑工程文件</h3>
+<p>上面的方法添加的属性文件，是绝对路径的，代码拷贝到其他机器就不一样能使用了，所以可以手动编辑工程文件，例如在 test.vcxproj 中添加如下代码：</p>
+<pre><code class="language-xml">  &lt;ImportGroup Label=&quot;PropertySheets&quot; Condition=&quot;'$(Configuration)|$(Platform)'=='Debug|Win32'&quot;&gt;
+    &lt;Import Project=&quot;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&quot; Condition=&quot;exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')&quot; Label=&quot;LocalAppDataPlatform&quot; /&gt;
+  &lt;/ImportGroup&gt;
+  &lt;ImportGroup Label=&quot;PropertySheets&quot; Condition=&quot;'$(Configuration)|$(Platform)'=='Release|Win32'&quot;&gt;
+    &lt;Import Project=&quot;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&quot; Condition=&quot;exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')&quot; Label=&quot;LocalAppDataPlatform&quot; /&gt;
+  &lt;/ImportGroup&gt;
+</code></pre>
+<h2 id="使用示例">使用示例</h2>
+<p>新建一个 Win32 控制台应用程序，在源文件 main.cpp 中包含头文件 vld.h 即可，代码如下：</p>
+<pre><code class="language-C++">#include &quot;vld.h&quot;
+
+int main()
+{
+	char* p = new char[10];
+	return 0;
+}
+</code></pre>
+<p>可以从输出窗口中看到，有内存泄漏，并提示了在哪一行</p>
+<figure data-type="image" tabindex="8"><img src="https://qinwanlin.github.io/post-images/1648433458551.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="总结">总结</h2>
+<p>VLD 安装和使用比较简单，也起到了效果。但有一个问题，就是需要在程序退出时才出检测结果。而很多程序（特别是服务器程序），都是一直在运行的，无法运行过程中知道内存的使用情况。而 VS 自带的诊断工具可以满足这方面的需求。</p>
+<figure data-type="image" tabindex="9"><img src="https://qinwanlin.github.io/post-images/1648435086206.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://waleon.blog.csdn.net/article/details/52789085">Visual C++ 内存泄露检测工具（VLD）</a></li>
+<li><a href="https://blog.csdn.net/aoxuestudy/article/details/121282272">vs2019 下内存泄漏检测工具 VLD (Visual Leak Detector) 的使用</a></li>
+</ol>
+
+                <div class="toc-container">
+                    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#vld">VLD</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E8%87%AA%E5%8A%A8%E6%B7%BB%E5%8A%A0-include-%E5%92%8C-lib-%E7%9B%AE%E5%BD%95">为什么能自动添加 include 和 lib 目录</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E6%9C%89%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B2%A1%E6%9C%89%E8%87%AA%E5%8A%A8%E6%B7%BB%E5%8A%A0-include-%E5%92%8C-lib-%E7%9B%AE%E5%BD%95">为什么现有的项目没有自动添加 include 和 lib 目录</a>
+<ul>
+<li><a href="#%E6%89%93%E5%BC%80%E5%B1%9E%E6%80%A7%E7%AE%A1%E7%90%86%E5%99%A8">打开属性管理器</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6">添加全局属性文件</a></li>
+<li><a href="#%E6%89%8B%E5%8A%A8%E7%BC%96%E8%BE%91%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6">手动编辑工程文件</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B">使用示例</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+
+                </div>
+                
+                    <hr/>
+                    <p class="next-post">下一篇：
+                        <a href="https://qinwanlin.github.io/post/linux_libstdc++/">
+                                                    <span class="post-title">
+                Linux 程序 libstdc++ 版本错误的问题&rarr;
+              </span>
+                        </a>
+                    </p>
+                
+                <div class="comment" style="text-align: center;">
+                    
+                        <span id="/post/memory_leakage_vld/" class="leancloud_visitors"
+                              data-flag-title="内存泄露检测工具VLD的使用">
+              <em class="post-meta-item-text">阅读量 </em>
+              <i class="leancloud-visitors-count">loading...</i>
+            </span>
+                    
+
+                    
+                    
+                        <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+    div#vcomments {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2.5%
+    }
+</style>
+
+
+    <div id="vcomments"></div>
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'g7YOvotVryeVhveDCMXHuimp-gzGzoHsz',
+        appKey: 'GMcbRHrEIs29YO7CFgmgtNDW',
+        avatar: 'robohash',
+        pageSize: 10,
+        recordIp: false,
+        placeholder: '你来啦，来说说你的想法',
+        visitor: true,
+    });
+</script>
+
+                    
+                </div>
+            </div>
+        </div>
+</article>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <!-- <li class="list-inline-item">
+              <a href="https://qinwanlin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li> -->
+                </ul>
+                <p class="copyright text-muted">Copyright &copy;<span>qinwanlin</span><br><a
+                            href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="https://qinwanlin.github.io/media/scripts/bootstrap.bundle.min.js"></script>
+<script src="https://qinwanlin.github.io/media/scripts/clean-blog.min.js"></script>
+<script src="//instant.page/3.0.0" type="module" defer
+        integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<style type="text/css">
+    a.back_to_top {
+        text-decoration: none;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background: #f0f0f0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 36px;
+        font-size: 18px;
+        text-align: center;
+        transition-duration: .5s;
+        transition-propety: background-color;
+        display: none
+    }
+
+    a.back_to_top span {
+        color: #888
+    }
+
+    a.back_to_top:hover {
+        cursor: pointer;
+        background: #dfdfdf
+    }
+
+    a.back_to_top:hover span {
+        color: #555
+    }
+
+    @media print, screen and(max-width: 580px) {
+        .back_to_top {
+            display: none !important
+        }
+    }
+</style>
+<a id="back_to_top" href="#" class="back_to_top">
+    <span>▲</span></a>
+<script>
+    $(document).ready((function (_this) {
+        return function () {
+            var bt;
+            bt = $('#back_to_top');
+            if ($(document).width() > 480) {
+                $(window).scroll(function () {
+                    var st;
+                    st = $(window).scrollTop();
+                    if (st > 30) {
+                        return bt.css('display', 'block')
+                    } else {
+                        return bt.css('display', 'none')
+                    }
+                });
+                return bt.click(function () {
+                    $('body,html').animate({
+                            scrollTop: 0
+                        },
+                        800);
+                    return false
+                })
+            }
+        }
+    })(this));
+</script>
+<script src="https://qinwanlin.github.io/media/scripts/tocScript.js"></script>
+</body>
+
+</html>

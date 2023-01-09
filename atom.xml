@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://qinwanlin.github.io</id>
+    <title>qinwanlin</title>
+    <updated>2023-01-09T02:28:59.233Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://qinwanlin.github.io"/>
+    <link rel="self" href="https://qinwanlin.github.io/atom.xml"/>
+    <subtitle>日积月累，温故知新</subtitle>
+    <logo>https://qinwanlin.github.io/images/avatar.png</logo>
+    <icon>https://qinwanlin.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, qinwanlin</rights>
+    <entry>
+        <title type="html"><![CDATA[Qt Creator格式化C++代码]]></title>
+        <id>https://qinwanlin.github.io/post/qt-creator-ge-shi-hua-cdai-ma/</id>
+        <link href="https://qinwanlin.github.io/post/qt-creator-ge-shi-hua-cdai-ma/">
+        </link>
+        <updated>2022-09-23T02:00:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>因为代码由多人合作开发，且代码格式风格各异，导致同一项目，甚至同一个源文件中，代码风格都各不同。为了更好阅读、修改代码，尽可能做到统一代码风格，因此引入QT Creator 插件和clang-format来实现此目标。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>因为代码由多人合作开发，且代码格式风格各异，导致同一项目，甚至同一个源文件中，代码风格都各不同。为了更好阅读、修改代码，尽可能做到统一代码风格，因此引入QT Creator 插件和clang-format来实现此目标。</p>
+<!-- more -->
+<p>本文主要介绍如何在ubuntu20.04平台的Qt Creator中使用快捷键格式化C/C++代码。主要包括几个步骤<br>
+（1）安装clang-format-15<br>
+（2）安装和配置Qt Creator插件Beautifier<br>
+（3）配置格式化快捷键</p>
+<h2 id="安装clang-format-15">安装clang-format-15</h2>
+<p>clang-format 是 Clang 编译器中的一个工具，可以方便的自动规范多种语言的格式，使得不同人写的代码有统一的编码格式，方便团队代码的统一管理以及后期的代码审核。</p>
+<p>为什么使用clang-format，而不是Qt Creator自身的格式化工具？<br>
+主要是clang-format可跨平台，支持不同的IDE，支持不同的语言，可配置的格式丰富，一套格式走天下。</p>
+<p>ubuntu20.04本身自带的clang-format的版本是10，版本偏低，不支持使用最新的格式。本文安装的是clang-format-15，步骤如下：</p>
+<p>（1）获取key</p>
+<pre><code class="language-bash">wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - 
+</code></pre>
+<p>（2）在 <code>/etc/apt/sources.list</code>配置源</p>
+<pre><code class="language-bash">deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main
+deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main
+</code></pre>
+<p>（3）安装clang-format-15</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install clang-format-15
+</code></pre>
+<h2 id="安装和配置qt-creator插件beautifier">安装和配置Qt Creator插件Beautifier</h2>
+<p>（1）菜单栏-帮助-关于插件，勾选插件Beautifier，然后重启Qt Creator。<br>
+<img src="https://qinwanlin.github.io/post-images/1663898975858.png" alt="" loading="lazy"></p>
+<p>（2）重启完毕后，菜单栏-工具-选项，即可看到Beautifier选项框，配置如下。格式模板见附件<br>
+<img src="https://qinwanlin.github.io/post-images/1663898986675.png" alt="" loading="lazy"></p>
+<h2 id="配置格式化快捷键">配置格式化快捷键</h2>
+<p>可以按个人喜好配置快捷键，如下图，使用Alt+L格式化当选行或选择的代码块，使用Ctrl+Shift+L格式化当前文件。<br>
+<img src="https://qinwanlin.github.io/post-images/1663899023269.png" alt="" loading="lazy"></p>
+<h2 id="使用建议">使用建议</h2>
+<p>（1）只在新增源文件时使用全文件格式化，旧文件不建议使用全文件格式化，不利于代码版本跟踪。<br>
+（2）修改代码、新增代码时，建议使用代码块格式化，逐步达到代码统一格式。</p>
+<h2 id="格式模板">格式模板</h2>
+<p>以下是以 Microsoft 是模板，并结合个人风格习惯来定制的代码格式</p>
+<pre><code class="language-bash"># https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# https://www.bbsmax.com/A/VGzlMjexJb/
+
+# 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto
+Language: Cpp
+
+BasedOnStyle: Microsoft
+
+# 访问说明符(public、private等)的偏移，-4与类名对齐
+AccessModifierOffset: -4
+
+# 左括号(左圆括号、左尖括号、左方括号)后的参数对齐: Align, DontAlign, AlwaysBreak(总是在左括号后换行)
+AlignAfterOpenBracket: Align
+
+# 在对结构数组使用初始化时，将字段对齐到列中 Left Right None
+AlignArrayOfStructures: Left
+
+# 连续赋值时，对齐所有等号
+AlignConsecutiveAssignments: true
+
+# 对齐连续位的样式 连续位域时，对齐所有冒号
+AlignConsecutiveBitFields: true
+
+# 连续声明时，对齐所有声明的变量名
+AlignConsecutiveDeclarations: true
+
+# 对齐连续位域字段的风格
+# AlignConsecutiveBitFields: AcrossEmptyLinesAndComments
+
+# 对齐连续宏定义的风格
+#AlignConsecutiveMacros: Consecutive  #clang-format 12
+
+# 用于在使用反斜杠换行中对齐反斜杠的选项
+AlignEscapedNewlines: Left
+
+# 水平对齐二元和三元表达式的操作数
+AlignOperands: true
+
+# 对齐连续的尾随的注释
+AlignTrailingComments: true
+
+# 如果函数调用或带括号的初始化列表不适合全部在一行时
+# 允许将所有参数放到下一行，即使BinPackArguments为false
+AllowAllArgumentsOnNextLine: true
+
+# 允许构造函数的初始化参数放在下一行
+AllowAllConstructorInitializersOnNextLine: true
+
+# 允许函数声明的所有参数在放在下一行
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# 允许短的块放在同一行(Always 总是将短块合并成一行，Empty 只合并空块)
+AllowShortBlocksOnASingleLine: Empty
+
+# 允许短的case标签放在同一行
+AllowShortCaseLabelsOnASingleLine: false
+
+# 允许短的枚举在同一行
+AllowShortEnumsOnASingleLine: false   # V11
+
+# 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+# 允许短的if语句保持在同一行
+AllowShortIfStatementsOnASingleLine: Never
+
+# 允许短的Lambda表达式保持在同一行，Inline(做为函数参数时) Empty
+AllowShortLambdasOnASingleLine: Empty
+
+# 允许短的循环保持在同一行
+AllowShortLoopsOnASingleLine: false
+
+# 总是在定义返回类型后换行(deprecated)
+AlwaysBreakAfterDefinitionReturnType: None
+
+# 总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数),
+#   AllDefinitions(所有的定义，不包括声明), TopLevelDefinitions(所有的顶级函数的定义)
+
+# 函数声明返回类型后是否换行(None 自动，All全部，TopLevel...)
+AlwaysBreakAfterReturnType: None
+
+# 总是在多行string字面量前换行
+AlwaysBreakBeforeMultilineStrings: false
+
+# 总是在template声明后换行
+AlwaysBreakTemplateDeclarations: Yes
+
+# false表示函数实参要么都在同一行，要么都各自一行
+BinPackArguments: true
+
+# false表示所有形参要么都在同一行，要么都各自一行
+BinPackParameters: true
+
+# 位域的冒号左右是否有空格 Both None Before After
+BitFieldColonSpacing: Both
+
+# 大括号换行，只有当 BreakBeforeBraces 设置为Custom时才有效
+BraceWrapping:
+  # case 语句后面
+  AfterCaseLabel: true
+  # class定义后面
+  AfterClass: true
+  # 控制语句后面
+  AfterControlStatement: true
+  # enum定义后面
+  AfterEnum: true
+  # 函数定义后面
+  AfterFunction: true
+  # 命名空间定义后面
+  AfterNamespace: true
+  # ObjC定义后面
+  AfterObjCDeclaration: false
+  # struct定义后面
+  AfterStruct: true
+  # union定义后面
+  AfterUnion: true
+  # extern 导出块后面
+  AfterExternBlock: true
+  # catch之前
+  BeforeCatch: true
+  # else之前
+  BeforeElse: true
+  # lambda表达式的执行体前
+  BeforeLambdaBody: false
+  # do-while的while前
+  BeforeWhile: false
+  # 缩进大括号(整个大括号框起来的部分都缩进)
+  IndentBraces: false
+  # 空函数的大括号是否分开，true(分开)
+  SplitEmptyFunction: true
+  # 空记录体(struct/class/union)的大括号是否分开，true(分开)
+  SplitEmptyRecord: true
+  # 空名字空间的大括号是否分开，true(分开)
+  SplitEmptyNamespace: true
+
+# 在二元运算符前换行: None(在操作符后换行), NonAssignment(在非赋值的操作符前换行), All(在操作符前换行)
+BreakBeforeBinaryOperators: All
+
+# 在大括号前换行: Attach(始终将大括号附加到周围的上下文), Linux(除函数、命名空间和类定义，与Attach类似),
+#   Mozilla(除枚举、函数、记录定义，与Attach类似), Stroustrup(除函数定义、catch、else，与Attach类似),
+#   Allman(总是在大括号前换行), GNU(总是在大括号前换行，并对于控制语句的大括号增加额外的缩进), WebKit(在函数前换行), Custom
+#   注：这里认为语句块也属于函数
+
+# 大括号的换行规则
+BreakBeforeBraces: Custom
+
+# 三元运算操作符换行位置（?和: 在新行还是尾部）
+BreakBeforeTernaryOperators: true
+
+# 在构造函数的初始化列表的逗号前换行
+BreakConstructorInitializersBeforeComma: false
+
+# 要使用的构造函数初始化式样式
+BreakConstructorInitializers: BeforeColon
+
+# 类声明时基类的样式
+BreakInheritanceList: BeforeColon
+
+# 是否允许字符串字面值换行
+BreakStringLiterals: true
+
+# 每行字符的限制，0表示没有限制
+ColumnLimit: 0
+
+# 描述具有特殊意义的注释的正则表达式，它不应该被分割为多行或以其它方式改变
+# CommentPragmas: ''
+
+# 如果为true，则连续的名称空间声明将在同一行上。如果为false，则在新行上声明每个名称空间。
+CompactNamespaces: false
+
+# 构造函数的初始化列表要么都在同一行，要么都各自一行
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+
+# 构造函数的初始化列表的缩进宽度
+ConstructorInitializerIndentWidth:  4
+
+# 延续的行的缩进宽度
+ContinuationIndentWidth: 4
+
+# 去除C++11的列表初始化的大括号{后和}前的空格
+Cpp11BracedListStyle: true
+
+# 继承当前文档的换行方式（\r\n 或 \n）
+DeriveLineEnding: true
+
+# 继承当前文档的最常用的指针和引用的对齐方式
+DerivePointerAlignment: false
+
+# 关闭格式化
+DisableFormat: false
+
+# 在访问控制(public private protected)后是否有空行，Never Leave Always
+EmptyLineAfterAccessModifier: Leave
+
+# 在访问控制(public private protected)前是否有空行，Never Leave Always
+EmptyLineBeforeAccessModifier: Always
+
+# 自动检测函数的调用和定义是否被格式为每行一个参数(Experimental)
+ExperimentalAutoDetectBinPacking: false
+
+# 如果为true，则clang格式会为短名称空间添加缺少的名称空间结尾注释，并修复无效的现有名称结束注释
+FixNamespaceComments: true
+
+# 需要被解读为foreach循环而不是函数调用的宏
+ForEachMacros:  [ foreach, Q_FOREACH, BOOST_FOREACH ]
+
+# 头文件排序与分组，Preserve(各块单独排序)，Merge(合到一起排序)，Regroup(一起排序，再分组)
+IncludeBlocks: Regroup
+
+# 对#include进行排序，匹配了某正则表达式的#include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX(优先级越小排序越靠前)，
+#   可以定义负数优先级从而保证某些#include永远在最前面
+IncludeCategories:
+  - Regex:  '^&quot;(llvm|llvm-c|clang|clang-c)/'
+    Priority:   2
+  - Regex:  '^(&lt;|&quot;(gtest|isl|json)/)'
+    Priority:   3
+  - Regex:  '.*'
+    Priority:   1
+
+# 缩进访问控制关键字(public private protected)
+IndentAccessModifiers: false   #v13
+
+# 缩进case块
+IndentCaseBlocks: false    #v11
+
+# 缩进case标签
+IndentCaseLabels: false
+
+# extern块时否缩进
+IndentExternBlock: NoIndent  #v11
+
+# goto标签是否缩进
+IndentGotoLabels: false  #v10
+
+# 要使用的预处理器指令缩进样式 BeforeHash/AfterHash
+IndentPPDirectives: BeforeHash
+
+# 缩进宽度
+IndentWidth: 4
+
+# 在控制块后插入大括号 (if, else, for, do, and while)
+InsertBraces: true   # V15
+
+# 函数返回类型换行时，缩进函数声明或函数定义的函数名
+IndentWrappedFunctionNames: false
+
+# 保留在块开始处的空行
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+#lambda表达式执行块的对齐方式
+LambdaBodyIndentation: Signature  #V13
+
+# 开始一个块的宏的正则表达式
+MacroBlockBegin: ''
+
+# 结束一个块的宏的正则表达式
+MacroBlockEnd: ''
+
+# 连续空行的最大数量
+MaxEmptyLinesToKeep: 5
+
+# 命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
+# NamespaceIndentation: Inner
+
+# 初始化列表参数的格式，Never BinPack CurrentLine(当前行放不下，就每个参数一行) NextLine(当前行放不下就尝试下一行，否则每个参数一行)
+PackConstructorInitializers: CurrentLine #v14
+
+# 使用ObjC块时缩进宽度
+ObjCBlockIndentWidth: 4
+
+# 在ObjC的@property后添加一个空格
+ObjCSpaceAfterProperty: false
+
+# 在ObjC的protocol列表前添加一个空格
+ObjCSpaceBeforeProtocolList: true
+
+# 在call(后对函数调用换行的penalty
+PenaltyBreakBeforeFirstCallParameter: 2
+
+# 在一个注释中引入换行的penalty
+PenaltyBreakComment: 300
+
+# 第一次在&lt;&lt;前换行的penalty
+PenaltyBreakFirstLessLess:  160
+
+# 在一个字符串字面量中引入换行的penalty
+PenaltyBreakString: 1000
+
+# 对于每个在行字符数限制之外的字符的penalty
+PenaltyExcessCharacter: 1000000
+
+# 对每一个空格缩进字符的penalty(相对于前导的非空格列计算)
+# PenaltyIndentedWhitespace: 0
+
+# 将函数的返回类型放到它自己的行的penalty
+PenaltyReturnTypeOnItsOwnLine: 160
+
+# 指针的对齐: Left, Right, Middle
+PointerAlignment: Left
+
+# 引用的对齐
+ReferenceAlignment: Left  #V14
+
+# 限定符的对齐方式(inline, static, const等)
+QualifierAlignment: Left  #V14
+
+# 使用空行分隔各块，classes, structs, enums, and functions
+SeparateDefinitionBlocks: Always #V14
+
+# 短命名空间的最大行数，超过指定行数会在后面加上namespace xx
+ShortNamespaceLines: 5
+
+# 允许重新排版注释
+ReflowComments: true
+
+# 排序#include，忽略大小写
+SortIncludes: CaseInsensitive
+
+# 允许排序 using 声明顺序
+SortUsingDeclarations: false
+
+# 在C风格类型转换后添加空格
+SpaceAfterCStyleCast: false
+
+# 在逻辑非操作符(!)之后插入一个空格
+SpaceAfterLogicalNot: false
+
+# 在 template 关键字后插入一个空格
+SpaceAfterTemplateKeyword: false
+
+# 定义在什么情况下在指针限定符之前或之后放置空格 Default Before After Both
+SpaceAroundPointerQualifiers: Default  #v12
+
+# 在赋值运算符之前添加空格
+SpaceBeforeAssignmentOperators: true
+
+# case冒号前是否有空格
+SpaceBeforeCaseColon: false #v12
+
+# 构造函数初始化列表的冒号前是否有空格
+SpaceBeforeCtorInitializerColon: true
+
+# 左圆括号之前添加一个空格: Never, ControlStatements(for/if/while...), Always
+SpaceBeforeParens: ControlStatements
+
+# 空格将在基于范围的for循环冒号之前被删除
+SpaceBeforeRangeBasedForLoopColon: true
+
+# [ 前是否添加空格（数组名和[之间，Lambdas不会受到影响）
+# 连续多个 [ 只考虑第一个（嵌套数组，多维数组）
+SpaceBeforeSquareBrackets: false
+
+# 空块{}之间是否有空格
+SpaceInEmptyBlock: false  #v10
+
+# 在空的圆括号()中添加空格
+SpaceInEmptyParentheses: false
+
+# 在尾随的评论前添加的空格数(只适用于//)
+SpacesBeforeTrailingComments: 4
+
+# 在尖括号的&lt;后和&gt;前添加空格
+SpacesInAngles: false
+
+# 在容器(ObjC和JavaScript的数组和字典等)字面量中添加空格
+SpacesInContainerLiterals: false
+
+# 一行注释的开头允许有多少空格
+SpacesInLineCommentPrefix:
+  Minimum: 1  #最少一个
+  Maximum: 1  #最多一个
+
+# 在C风格类型转换的括号中添加空格
+SpacesInCStyleCastParentheses: false
+
+# 如果为true，将在If/for/switch/while条件括号前后插入空格。
+SpacesInConditionalStatement: false
+
+# 在圆括号的(后和)前添加空格
+SpacesInParentheses: false
+
+# 在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
+SpacesInSquareBrackets: false
+
+# 标准: Cpp03, Cpp11, Auto
+Standard: Cpp11
+
+# 忽略一些声明变量对齐，如QT的emit，避免被对齐
+StatementAttributeLikeMacros: [emit, Q_EMIT]    #V12
+
+# tab宽度
+TabWidth: 4
+
+# 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
+UseTab: Never
+
+</code></pre>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><a href="https://clang.llvm.org/docs/ClangFormatStyleOptions.html">Clang-Format Style Options</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/453222522">使用 clang-format 格式化代码</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/sinat_34986308/article/details/116116780">Ubuntu下安装高版本clang-format</a></p>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ubuntu20.04安装ros2]]></title>
+        <id>https://qinwanlin.github.io/post/ubuntu2004-an-zhuang-ros2/</id>
+        <link href="https://qinwanlin.github.io/post/ubuntu2004-an-zhuang-ros2/">
+        </link>
+        <updated>2022-08-23T09:38:44.000Z</updated>
+        <summary type="html"><![CDATA[<p>本文简单介绍如何安装ros2（galactic版）。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本文简单介绍如何安装ros2（galactic版）。</p>
+<!-- more -->
+<h2 id="设置镜像源">设置镜像源</h2>
+<p>镜像源可设置国内的也可以设置官方的，可直接执行如下命令。</p>
+<pre><code class="language-bash">#官方源
+sudo sh -c 'echo &quot;deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main&quot; &gt; /etc/apt/sources.list.d/ros2.list'
+#清华源
+sudo sh -c 'echo &quot;deb [arch=$(dpkg --print-architecture)] http://mirror.tuna.tsinghua.edu.cn/ros2/ubuntu $(lsb_release -cs) main&quot; &gt; /etc/apt/sources.list.d/ros2.list'
+</code></pre>
+<h2 id="安装ros的key">安装ros的key</h2>
+<pre><code class="language-bash">curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+或
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+</code></pre>
+<h2 id="安装ros">安装ros</h2>
+<p>设置源和key后，先更新一下，再搜索一下，看是否有我们需要的ros版本，然后再安装。</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt search ros-galactic-desktop
+sudo apt install ros-galactic-desktop
+</code></pre>
+<h2 id="配置环境变量">配置环境变量</h2>
+<pre><code class="language-bash"># 临时配置
+source /opt/ros/galactic/setup.bash
+# 设置配置文件
+echo &quot;source /opt/ros/galactic/setup.bash&quot; &gt;&gt; ~/.bashrc
+</code></pre>
+<h2 id="测试">测试</h2>
+<p>使用<code>ros2 run packname nodename</code>可执行一个节点，以下命令可运行两个实例，talker发布，listener接收。</p>
+<pre><code class="language-bash">ros2 run demo_nodes_cpp talker
+ros2 run demo_nodes_py listener
+</code></pre>
+<h2 id="安装编译工具colcon">安装编译工具colcon</h2>
+<p>ros提供了一个编译工具colcon，安装命令如下</p>
+<pre><code class="language-bash">sudo apt install python3-colcon-common-extensions
+</code></pre>
+<h2 id="如何卸载">如何卸载</h2>
+<pre><code class="language-bash">sudo apt remove ros-galactic-* &amp;&amp; sudo apt autoremove
+</code></pre>
+<h2 id="参考">参考</h2>
+<p>https://blog.csdn.net/qintianhaohao/article/details/111397957<br>
+https://mirror.tuna.tsinghua.edu.cn/help/ros2/<br>
+https://book.guyuehome.com/ROS2/1.%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/1.3_ROS2%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ubuntu环境变量配置文件]]></title>
+        <id>https://qinwanlin.github.io/post/ubuntu-huan-jing-bian-liang-pei-zhi-wen-jian/</id>
+        <link href="https://qinwanlin.github.io/post/ubuntu-huan-jing-bian-liang-pei-zhi-wen-jian/">
+        </link>
+        <updated>2022-08-23T07:19:10.000Z</updated>
+        <summary type="html"><![CDATA[<p>编程时经常需要添加环境变量，使编译时能找到头文件和库文件，除了通过<code>export</code>临时修改外，也可以写到配置文件中，下面介绍一下各级配置文件的区别。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>编程时经常需要添加环境变量，使编译时能找到头文件和库文件，除了通过<code>export</code>临时修改外，也可以写到配置文件中，下面介绍一下各级配置文件的区别。</p>
+<!-- more -->
+<h2 id="etcprofile">/etc/profile</h2>
+<p>用于设置系统级的环境变量和启动程序，在这个文件下配置会对所有用户生效。当用户登录时，文件会被执行，并从<code>/etc/profile.d</code>目录的配置文件中查找shell设置。如果对/etc/profile修改的话必须重启才会生效</p>
+<h2 id="etcbashbashrc">/etc/bash.bashrc</h2>
+<p>每一个运行bash shell的用户执行此文件。当bash shell被打开时，该文件被读取。如果想对所有使用bash的用户修改某个配置并在以后打开的bash都生效的话可以修改这个文件，修改之后不用重启，重新打开一个bash即可生效。</p>
+<h2 id="~profile">~/.profile</h2>
+<p>每个用户都可使用该文件输入专用于自己使用的shell信息，当用户登录时，该文件仅仅执行一次！默认情况下，他设置一些环境变量，执行用户的<code>.bashrc</code>文件.</p>
+<h2 id="~bashrc">~/.bashrc</h2>
+<p>该文件包含专用于你的bash shell的bash信息，当登录时以及每次打开新的shell时，该该文件被读取。</p>
+<h2 id="~bash_logout">~/.bash_logout</h2>
+<p>当每次退出系统（退出bash shell）时，执行该文件，通常存放清理工作的命令。</p>
+<h2 id="~bash_history">~/..bash_history</h2>
+<p>bash shell 执行的历史命令。</p>
+<h2 id="执行顺序">执行顺序</h2>
+<ul>
+<li>
+<p><strong>登陆shell</strong><br>
+登陆shell时，首先执行<code>/etc/profile</code>，之后执行用户目录下的<code>~/.profile</code>，<code>~/.profile</code>中会执行<code>~/.bashrc</code>。</p>
+</li>
+<li>
+<p><strong>交互式非登陆shell</strong><br>
+首先执行<code>/etc/bash.bashrc</code>，之后执行<code>~/.bashrc</code>。</p>
+</li>
+</ul>
+<h2 id="参考">参考</h2>
+<p>原文链接：https://blog.csdn.net/winycg/article/details/80572735<br>
+https://blog.csdn.net/sch0120/article/details/70226903</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ubuntu20.04编译安装boost1.78.0]]></title>
+        <id>https://qinwanlin.github.io/post/ubuntu2004-bian-yi-an-zhuang-boost1780/</id>
+        <link href="https://qinwanlin.github.io/post/ubuntu2004-bian-yi-an-zhuang-boost1780/">
+        </link>
+        <updated>2022-08-23T05:35:28.000Z</updated>
+        <summary type="html"><![CDATA[<p>ubuntu20.04可以通过apt安装boost，自带的boost版本是1.71.0。因为需要使用指定版本，所以需要手动编译和安装。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>ubuntu20.04可以通过apt安装boost，自带的boost版本是1.71.0。因为需要使用指定版本，所以需要手动编译和安装。</p>
+<!-- more -->
+<h2 id="apt安装boost">apt安装boost</h2>
+<p>使用命令 <code>sudo apt install libboost-all-dev</code> 即可，以下介绍编译安装指定版本。</p>
+<h2 id="下载boost">下载boost</h2>
+<p>可在boost官网下载最新版本，也可以在 sourceforge 中下载到旧版本。可直接使用浏览器下载，或wget下载。下载完后，解压，再进到目录内操作。</p>
+<pre><code class="language-bash">wget https://udomain.dl.sourceforge.net/project/boost/boost/1.78.0/boost_1_78_0.tar.gz
+</code></pre>
+<h2 id="编译和安装">编译和安装</h2>
+<p>一般而言，编译安装到本地不需要做任何配置，直接运行脚本即可，也可以进行一些特定的配置。</p>
+<pre><code class="language-bash"># 配置和检查，也可以配置编译哪些库、编译工具集、安装目录
+./bootstrap.sh
+# 或
+./bootstrap.sh --with-libraries=all --with-toolset=gcc --prefix=/usr/local/boost_1_78_0
+
+# 编译boost库
+./b2
+
+#安装boost库，也可以在此时指定安装目录
+./b2 install
+# 或
+./b2 install --prefix=/usr/local
+</code></pre>
+<h2 id="配置库路径">配置库路径</h2>
+<p>上一步安装完后只是把头文件和库拷贝到指定目录，程序链接时还是找不到库的。有几种方法使链接时找到boost库。</p>
+<h3 id="方法一">方法一</h3>
+<p>如果是安装到 <code>/lib</code> 或 <code>/usr/lib</code> 或  <code>/usr/local/lib/</code> 目录，可以直接调用 <code>sudo ldconfig</code> ，相当于刷新一下缓存 <code>/etc/ld.so.cache</code> 。</p>
+<h3 id="方法二">方法二</h3>
+<p>如果是安装到一个指定目录，可以往配置文件 <code>/etc/ld.so.conf</code> 中追加配置项，也可以在 <code>/etc/ld.so.conf.d/</code> 目录下新增一个配置文件。</p>
+<pre><code class="language-bash"># 追加配置项
+sudo sh -c 'echo &quot;/usr/local/boost_1_78_0/lib&quot; &gt;&gt; /etc/ld.so.conf'
+# 或新增配置文件
+sudo sh -c 'sudo echo &quot;/usr/local/boost_1_78_0/lib&quot; &gt; /etc/ld.so.conf.d/boost_1_78_0.conf'
+sudo ldconfig
+</code></pre>
+<h3 id="方法三">方法三</h3>
+<p>也可以把库路径添加环境变量LD_LIBRARY_PATH中。可临时添加，也可以保存到配置文件中。</p>
+<pre><code class="language-bash">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/boost_1_78_0/lib
+</code></pre>
+<h2 id="参考">参考</h2>
+<p>https://www.cnblogs.com/my-show-time/p/15250435.html<br>
+https://blog.csdn.net/winycg/article/details/80572735</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何每天获取 bing 超高清版壁纸]]></title>
+        <id>https://qinwanlin.github.io/post/get_bing_wallpaper/</id>
+        <link href="https://qinwanlin.github.io/post/get_bing_wallpaper/">
+        </link>
+        <updated>2022-04-24T03:32:05.000Z</updated>
+        <summary type="html"><![CDATA[<p>必应的每日壁纸的质量非常高，那么如何将必应的每日壁纸保存下来，作为桌面壁纸轮播呢</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>必应的每日壁纸的质量非常高，那么如何将必应的每日壁纸保存下来，作为桌面壁纸轮播呢</p>
+<!-- more -->
+<p>主要参考：https://www.cnblogs.com/half-bug/p/12652562.html</p>
+<p>修改点：</p>
+<ul>
+<li>保存图片到当前目录</li>
+<li>保存相关信息到csv，以便后续可能展示</li>
+<li>增加了个写日志，方便查看</li>
+</ul>
+<p>使用 forever 后台即可实现每天获取并保存下来，<code>forever start .\bing-daily.js</code></p>
+<p>下面是完整的代码以供参考</p>
+<pre><code class="language-js">// 引包
+const https = require('https')
+const request = require('request')
+const fs = require('fs')
+var sd = require('silly-datetime');
+
+const rootUrl = 'https://cn.bing.com'
+const xhrUrl = 'https://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n=1&amp;nc=1586183781119&amp;pid=hp&amp;uhd=1&amp;uhdwidth=2880&amp;uhdheight=1620'       // xhr 请求地址
+const jpgUrl = '_UHD.jpg'    // 后缀
+const jsonFile = './bing-daily.csv'
+const logFile = './debug.log'
+
+// 获取当天高清图
+const getToday = ()=&gt;{
+    // 发送请求
+    https.get(xhrUrl, res =&gt; {
+        let rawData = '';
+        res.on('data', (chunk) =&gt; {
+            rawData += chunk;
+        })
+    
+        res.on('end', () =&gt; {
+            const parsedData = JSON.parse(rawData);
+            var img = parsedData.images[0]
+            var {enddate, urlbase, title, copyright} = img;
+            var fullUrl = rootUrl + urlbase + jpgUrl
+			var line = enddate + &quot;, &quot; + fullUrl + &quot;, &quot; + title + &quot;, &quot; + copyright + &quot;\n&quot;
+            var filename = './' + enddate + '.jpg'
+
+			console.log(line)
+			
+            request(fullUrl).pipe(fs.createWriteStream(filename))
+            fs.appendFile(jsonFile, line, (err) =&gt; {})
+
+            var logLine = sd.format(Date(), 'YYYY-MM-DD HH:mm:ss') + '  ' + line
+            fs.appendFile(logFile, logLine, (err) =&gt; {})
+        })
+    })
+}
+
+// 每天执行一遍
+//getToday();
+setInterval(getToday, 24*60*60*1000)
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[内存泄露检测工具VLD的使用]]></title>
+        <id>https://qinwanlin.github.io/post/memory_leakage_vld/</id>
+        <link href="https://qinwanlin.github.io/post/memory_leakage_vld/">
+        </link>
+        <updated>2022-03-25T07:55:35.000Z</updated>
+        <summary type="html"><![CDATA[<p>C/C++ 程序越复杂，内存的管理显得越重要，稍有不慎就会出现泄漏。如果内存泄漏不是很严重，在短时间内对程序不会有太大影响，这也使得内存泄漏问题有很强的隐蔽性，不易被发现。然而不管内存泄漏多么轻微，当程序长时间运行时，其破坏力是惊人的 - 从性能下降到内存耗尽，甚至会影响其他程序的正常运行。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>C/C++ 程序越复杂，内存的管理显得越重要，稍有不慎就会出现泄漏。如果内存泄漏不是很严重，在短时间内对程序不会有太大影响，这也使得内存泄漏问题有很强的隐蔽性，不易被发现。然而不管内存泄漏多么轻微，当程序长时间运行时，其破坏力是惊人的 - 从性能下降到内存耗尽，甚至会影响其他程序的正常运行。</p>
+<!-- more -->
+<h2 id="vld">VLD</h2>
+<p>VLD（Visual Leak Detector）是一款用于 Visual C++ 的免费内存泄露检测工具。<br>
+相比较其它内存泄露检测工具，它在检测到内存泄漏的同时，还具有如下特点：</p>
+<blockquote>
+<ul>
+<li>可以得到内存泄漏点的调用堆栈，如果可以的话，还能得到其所在文件及行号；</li>
+<li>可以得到泄露内存的完整数据；</li>
+<li>可以设置内存泄露报告的级别；</li>
+<li>它是一个已经打包的 lib，使用时无须编译源码。对于使用者自己的代码，只需要做很小的改动；</li>
+<li>源码使用 GNU 许可发布，并有详尽的文档及注释。对于想深入了解堆内存管理的读者，是一个不错的选择。</li>
+</ul>
+</blockquote>
+<p>可见，VLD 简单易用。只需要做很小的改动（添加库并包含头文件），然后正常运行自己的程序，就可以发现内存问题；如果深入源码，可以学习到堆内存分配与释放的原理、内存泄漏检测的原理及内存操作的常用技巧等。</p>
+<p>本人测试系统是 Win10， 测试过 VS2017、2019、2022，都是可以使用 VLD的，以下简单记录一下安装以及使用过程。</p>
+<h2 id="安装">安装</h2>
+<p>VLD 下载地址：<a href="https://kinddragon.github.io/vld/">https://kinddragon.github.io/vld/</a>，当前最新版本是 vld-2.5.1-setup.exe，下载完成后，双击进行安装即可。在安装目录下会有相应的 include 和 lib 目录。</p>
+<figure data-type="image" tabindex="1"><img src="https://qinwanlin.github.io/post-images/1648430034461.png" alt="缺失图片" title="目录图" loading="lazy"></figure>
+<p>安装完成后，大部分现有项目以及新建的项目，会自动添加其 include 目录添加到 VS 的附加安装目录，将其 lib 目录添加到 VS 的附加库目录，而无需手动添加。</p>
+<h2 id="为什么能自动添加-include-和-lib-目录">为什么能自动添加 include 和 lib 目录</h2>
+<p>安装 VLD 时会把相应的 include 和 lib 目录，添加到 VS 的全局属性配置文件中。本人的配置文件路径是：C:\Users\Administrator\AppData\Local\Microsoft\MSBuild\v4.0，</p>
+<figure data-type="image" tabindex="2"><img src="https://qinwanlin.github.io/post-images/1648431278960.png" alt="缺失图片" loading="lazy"></figure>
+<p>我们打开 Microsoft.Cpp.Win32.user.props 会看到 VLD 的 include 和 lib 目录已经添加到 AdditionalIncludeDirectories 和 AdditionalLibraryDirectories 属性中。</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Project DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+	&lt;ImportGroup Label=&quot;PropertySheets&quot;&gt;&lt;/ImportGroup&gt;
+	&lt;PropertyGroup Label=&quot;UserMacros&quot; /&gt;
+	&lt;PropertyGroup /&gt;
+	&lt;ItemDefinitionGroup&gt;
+		&lt;ClCompile&gt;
+			&lt;AdditionalIncludeDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)&lt;/AdditionalIncludeDirectories&gt;
+		&lt;/ClCompile&gt;
+		&lt;Link&gt;
+			&lt;AdditionalLibraryDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\lib\Win32;%(AdditionalLibraryDirectories)&lt;/AdditionalLibraryDirectories&gt;
+		&lt;/Link&gt;
+		&lt;Lib&gt;
+			&lt;AdditionalLibraryDirectories&gt;C:\Program Files (x86)\Visual Leak Detector\lib\Win32;%(AdditionalLibraryDirectories)&lt;/AdditionalLibraryDirectories&gt;
+		&lt;/Lib&gt;
+	&lt;/ItemDefinitionGroup&gt;
+	&lt;ItemGroup /&gt;
+&lt;/Project&gt;
+</code></pre>
+<p>再看项目的属性配置，只要勾选了“从父级或项目默认设置继承”，就可看到继承的值中有 VLD 的 include 或 lib 目录。</p>
+<figure data-type="image" tabindex="3"><img src="https://qinwanlin.github.io/post-images/1648431740579.png" alt="缺失图片" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://qinwanlin.github.io/post-images/1648432117301.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="为什么现有的项目没有自动添加-include-和-lib-目录">为什么现有的项目没有自动添加 include 和 lib 目录</h2>
+<p>大概率的原因是项目没有包含全局的属性文件 Microsoft.Cpp.Win32.user.props 或 Microsoft.Cpp.x64.user.props 。添加的方法如下：</p>
+<h3 id="打开属性管理器">打开属性管理器</h3>
+<figure data-type="image" tabindex="5"><img src="https://qinwanlin.github.io/post-images/1648432449496.png" alt="缺失图片" loading="lazy"></figure>
+<h3 id="添加全局属性文件">添加全局属性文件</h3>
+<figure data-type="image" tabindex="6"><img src="https://qinwanlin.github.io/post-images/1648432571771.png" alt="缺失图片" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://qinwanlin.github.io/post-images/1648432676356.png" alt="缺失图片" loading="lazy"></figure>
+<h3 id="手动编辑工程文件">手动编辑工程文件</h3>
+<p>上面的方法添加的属性文件，是绝对路径的，代码拷贝到其他机器就不一样能使用了，所以可以手动编辑工程文件，例如在 test.vcxproj 中添加如下代码：</p>
+<pre><code class="language-xml">  &lt;ImportGroup Label=&quot;PropertySheets&quot; Condition=&quot;'$(Configuration)|$(Platform)'=='Debug|Win32'&quot;&gt;
+    &lt;Import Project=&quot;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&quot; Condition=&quot;exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')&quot; Label=&quot;LocalAppDataPlatform&quot; /&gt;
+  &lt;/ImportGroup&gt;
+  &lt;ImportGroup Label=&quot;PropertySheets&quot; Condition=&quot;'$(Configuration)|$(Platform)'=='Release|Win32'&quot;&gt;
+    &lt;Import Project=&quot;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&quot; Condition=&quot;exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')&quot; Label=&quot;LocalAppDataPlatform&quot; /&gt;
+  &lt;/ImportGroup&gt;
+</code></pre>
+<h2 id="使用示例">使用示例</h2>
+<p>新建一个 Win32 控制台应用程序，在源文件 main.cpp 中包含头文件 vld.h 即可，代码如下：</p>
+<pre><code class="language-C++">#include &quot;vld.h&quot;
+
+int main()
+{
+	char* p = new char[10];
+	return 0;
+}
+</code></pre>
+<p>可以从输出窗口中看到，有内存泄漏，并提示了在哪一行</p>
+<figure data-type="image" tabindex="8"><img src="https://qinwanlin.github.io/post-images/1648433458551.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="总结">总结</h2>
+<p>VLD 安装和使用比较简单，也起到了效果。但有一个问题，就是需要在程序退出时才出检测结果。而很多程序（特别是服务器程序），都是一直在运行的，无法运行过程中知道内存的使用情况。而 VS 自带的诊断工具可以满足这方面的需求。</p>
+<figure data-type="image" tabindex="9"><img src="https://qinwanlin.github.io/post-images/1648435086206.png" alt="缺失图片" loading="lazy"></figure>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://waleon.blog.csdn.net/article/details/52789085">Visual C++ 内存泄露检测工具（VLD）</a></li>
+<li><a href="https://blog.csdn.net/aoxuestudy/article/details/121282272">vs2019 下内存泄漏检测工具 VLD (Visual Leak Detector) 的使用</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux 程序 libstdc++ 版本错误的问题]]></title>
+        <id>https://qinwanlin.github.io/post/linux_libstdc++/</id>
+        <link href="https://qinwanlin.github.io/post/linux_libstdc++/">
+        </link>
+        <updated>2022-03-24T09:00:10.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近因为原来的编译是 GCC 4.7.3，版本太低，不能完全支持 C++11，因此改为使用 GCC 4.8.3 来编译程序，发现因为库版本太低，运行不起来。经过实验和查找资料，把一些相关内容记录下来。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近因为原来的编译是 GCC 4.7.3，版本太低，不能完全支持 C++11，因此改为使用 GCC 4.8.3 来编译程序，发现因为库版本太低，运行不起来。经过实验和查找资料，把一些相关内容记录下来。</p>
+<!-- more -->
+<h2 id="错误提示信息">错误提示信息</h2>
+<p>错误提示信息显示，所依赖的库 libstdc++.so.6，要求的 GLIBCXX 版本是 3.4.19，而系统上的库没找到。</p>
+<pre><code class="language-bash">root@socfpga:~# ./NetProc
+./NetProc: /lib/libstdc++.so.6: version `GLIBCXX_3.4.19' not found (required by ./NetProc)
+</code></pre>
+<h2 id="查看当前的库版本">查看当前的库版本</h2>
+<p>那如何查看板上的libstdc++.so.6版本呢，使用 <code>strings</code> 命令。</p>
+<pre><code class="language-bash">root@socfpga:~# strings /lib/libstdc++.so.6 |grep GLIBC
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+GLIBCXX_3.4.7
+GLIBCXX_3.4.8
+GLIBCXX_3.4.9
+GLIBCXX_3.4.10
+GLIBCXX_3.4.11
+GLIBCXX_3.4.12
+GLIBCXX_3.4.13
+GLIBCXX_3.4.14
+GLIBCXX_3.4.15
+GLIBCXX_3.4.16
+GLIBCXX_3.4.17
+GLIBC_2.4
+GLIBCXX_DEBUG_MESSAGE_LENGTH
+</code></pre>
+<h2 id="查询库对应的编译器">查询库对应的编译器</h2>
+<p>理论上，系统上的库是什么版本，应用程序就应该用对应版本的编译器编译，才可以匹配。那如何查看当前库是使用哪个版本的编译器编译的呢，使用 <code>readelf</code> 命令。</p>
+<pre><code class="language-bash">root@socfpga:~# readelf /lib/libstdc++.so.6 -p .comment
+String dump of section '.comment':
+  [     0]  GCC: (crosstool-NG linaro-1.13.1-4.7-2012.11-20121123 - Linaro GCC 2012.11) 4.7.3 20121106 (prerelease)
+</code></pre>
+<p>从上面命令查出来的信息可以明显看到，使用的是 GCC4.7.3 编译器编译的，因此使用 GCC 4.8.3 来编译程序，运行不起来也是正常的。</p>
+<h2 id="查找-libstdcso6库文件">查找 libstdc++.so.6库文件</h2>
+<p>网上一些文章说，查看一下系统里面有没有其他高版本的库，指定高版本的库文件也许能运行起来。查找库文件的话，可以使用 <code>find</code> 命令，或者 <code>locate</code> 命令，不过当前使用的系统中没有locate命令。</p>
+<pre><code class="language-bash">root@socfpga:~# find / -name &quot;libstdc++.so.6*&quot;
+/lib/libstdc++.so.6.0.17-gdb.py
+/lib/libstdc++.so.6.0.17
+/lib/libstdc++.so.6
+
+# 或
+$ locate libstdc++.so
+</code></pre>
+<p>从查找的结果来看，只包含一个版本，就是6.0.17。</p>
+<h2 id="版本对应关系">版本对应关系</h2>
+<table>
+<thead>
+<tr>
+<th>gcc 版本</th>
+<th>libstdc++ 版本号</th>
+<th>glibc 版本号</th>
+<th>cxxabi 版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.7</td>
+<td>libstdc++.so.6.0.17</td>
+<td>GLIBCXX_3.4.17</td>
+<td>CXXABI_1.3.6</td>
+</tr>
+<tr>
+<td>4.8</td>
+<td>libstdc++.so.6.0.18</td>
+<td>GLIBCXX_3.4.18</td>
+<td>CXXABI_1.3.7</td>
+</tr>
+<tr>
+<td>4.9</td>
+<td>libstdc++.so.6.0.20</td>
+<td>GLIBCXX_3.4.20</td>
+<td>CXXABI_1.3.8</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>libstdc++.so.6.0.21</td>
+<td>GLIBCXX_3.4.21</td>
+<td>CXXABI_1.3.9</td>
+</tr>
+<tr>
+<td>6.1</td>
+<td>libstdc++.so.6.0.22</td>
+<td>GLIBCXX_3.4.22</td>
+<td>CXXABI_1.3.10</td>
+</tr>
+<tr>
+<td>7.1</td>
+<td>libstdc++.so.6.0.23</td>
+<td>GLIBCXX_3.4.23</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>libstdc++.so.6.0.24</td>
+<td>GLIBCXX_3.4.24</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>8.1</td>
+<td>libstdc++.so.6.0.25</td>
+<td>GLIBCXX_3.4.25</td>
+<td>CXXABI_1.3.11</td>
+</tr>
+<tr>
+<td>9.1</td>
+<td>libstdc++.so.6.0.26</td>
+<td>GLIBCXX_3.4.26</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>9.2</td>
+<td>libstdc++.so.6.0.27</td>
+<td>GLIBCXX_3.4.27</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>9.3</td>
+<td>libstdc++.so.6.0.28</td>
+<td>GLIBCXX_3.4.28</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+<tr>
+<td>10.1</td>
+<td>libstdc++.so.6.0.28</td>
+<td>GLIBCXX_3.4.28</td>
+<td>CXXABI_1.3.12</td>
+</tr>
+</tbody>
+</table>
+<h2 id="解决办法">解决办法</h2>
+<p>升级动态库即可解决问题。因为这开发板的系统不能随便动，也不在职责之内，不便实验。具体过程可参考后面的链接。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://blog.csdn.net/u012811841/article/details/77854581">通用方法 解决 /usr/lib64/libstdc++.so.6: version `CXXABI_1.3.8' not found 的问题</a></li>
+<li><a href="https://www.gudanba.com/1399.html">Linux 解决 libstdc++ 的版本问题</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html#abi.versioning">GCC官方详细版本对应关系</a></li>
+<li><a href="https://blog.csdn.net/mo4776/article/details/119837501">多个 gcc/glibc 版本的共存及指定 gcc 版本的编译</a></li>
+<li><a href="https://gcc.gnu.org/projects/cxx-status.html#cxx11">C++ Standards Support in GCC</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Gridea + github + gitee 搭建个人博客]]></title>
+        <id>https://qinwanlin.github.io/post/gridea-github-gitee-blog/</id>
+        <link href="https://qinwanlin.github.io/post/gridea-github-gitee-blog/">
+        </link>
+        <updated>2022-03-15T06:28:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程，主要介绍如何同步到 github 和 gitee。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本博客由使用 Gridea 创建，记录一下搭建过程，主要介绍如何同步到 github 和 gitee。</p>
+<!-- more -->
+<h2 id="为什么选择-gridea">为什么选择 Gridea</h2>
+<p>现在主流的静态博客有Jekyll、Hugo、Hexo，之所以选择Gridea，两个原因：</p>
+<ol>
+<li>简单实用，自带客户端，直接下载一个桌面程序安装，配置、预览、同步，就搞定了。</li>
+<li>有评论功能，只需要简单配置就能加上评论功能。有了评价，博客才有了灵魂。</li>
+</ol>
+<h2 id="如何安装">如何安装</h2>
+<p>安装的事情太简单了，不想重复，浪费时间。按照参考的链接很容易就上手了。以下只分享一些比较特别的内容。</p>
+<h2 id="同步到github">同步到github</h2>
+<p>由于国内众所周知的原因，访问github有一定概率的困难。使用 Gridea 的客户端即使测试连接成功，同步文件到 github 上也是经常性失败的。</p>
+<p>同步文件到 github 有两种方法：</p>
+<ol>
+<li>找梯子翻出去，免费的不好用，收费的，嗯，不舍得</li>
+<li>使用 Github Destop 同步。没搞清楚为什么 Gridea 同步失败，而使用 Github Destop 同步成功的概率非常大。</li>
+</ol>
+<p>如何使用 Destop 同步，可参考 <a href="https://github.com/getgridea/gridea/issues/505">关于同步那些事（国内 github 和 gitee）</a></p>
+<p>大致步骤是：</p>
+<ol>
+<li>删除 output 目录下所有文件</li>
+<li>使用 Destop 克隆 github 项目到 output 目录</li>
+<li>在Gridea中点同步，生成文件到 output 目录</li>
+<li>使用 Destop 同步到 github</li>
+</ol>
+<h2 id="同步到gitee">同步到gitee</h2>
+<p>Gridea 本身不支持gitee，需要自己手动同步，为了简化步骤，写成一个脚本，一键同步到 gitee。<br>
+主要参考的文章是  <a href="https://www.cnblogs.com/zxyfrank/p/gridea-win10.html">采用 Gitee Pages + Gridea + 批处理 搭建个人主页 (win10)</a></p>
+<p>以下分享几段完整的代码。</p>
+<h3 id="gitee_initbat">gitee_init.bat</h3>
+<p>在站点源文件路径（我的目录是 C:\Users\Administrator\Documents\Gridea）下，创建一个gitee_init.bat，用于初始化 gitee 项目的目录。</p>
+<pre><code class="language-bash">cd /d %~dp0
+
+:: 清空，删除再创建目录
+rd output_gitee
+md output_gitee
+
+:: 进入目录，初始化目录，拉取项目文件
+cd output_gitee
+git init
+git remote add origin https://gitee.com/qinwanlin/qinwanlin.git
+git fetch  
+git reset --hard origin/master
+git branch --set-upstream-to=origin/master master
+
+pause
+</code></pre>
+<h3 id="replacepy">replace.py</h3>
+<p>因为需要把所有文件中的 github 的域名替换为 gitee 的域名，所以写了一个 python 的脚本，最后编译为 exe 备用。创建一个replace.py的文件。</p>
+<pre><code class="language-python">import os
+import sys
+
+path = '.\output_gitee'
+ori = 'qinwanlin.github.io'
+tar = 'qinwanlin.gitee.io'
+
+def get_filelist(dir):
+    filelist = []
+    for home, dirs, files in os.walk(path):
+        dirs[:] = [d for d in dirs if not d[0] == '.']
+        print(home + &quot; : &quot; + str(dirs))
+        for filename in files:
+            # 文件名列表，包含完整路径
+            filelist.append(os.path.join(home, filename))
+    return filelist
+
+def replace(file_path, old_str, new_str):
+    try:
+        f = open(file_path,'r+',encoding='utf-8')
+        alltext = f.read().replace(old_str, new_str)
+        f.seek(0)
+        f.truncate()
+        f.write(alltext)
+        f.close()
+        print(&quot;replace success: &quot; + file_path)
+    except Exception as e:
+        print(&quot;replace error  : &quot; + file_path)
+
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) &lt; 4 :
+        print(&quot;replace dir github_url gitee_url \n&quot;)
+        exit()
+
+    path = sys.argv[1]
+    ori = sys.argv[2]
+    tar = sys.argv[3]
+
+    print(path)
+    print(ori)
+    print(tar)
+
+    filelist = get_filelist(dir)
+    print(&quot;file count = &quot; + str(len(filelist)))
+    try:
+        for file in filelist:
+            replace(file, ori, tar)
+    except Exception as e:
+        print(str(e))
+</code></pre>
+<h3 id="gitee_pushbat">gitee_push.bat</h3>
+<p>再创建一个 gitee_push.bat 的文件，以后同步文件，就需要点运行一下就可以了。</p>
+<pre><code class="language-bash">cd /d %~dp0
+
+:: 拷贝文件
+xcopy .\output .\output_gitee /e/c/y
+
+:: 替换地址
+replace.exe .\output_gitee qinwanlin.github.io qinwanlin.gitee.io
+
+:: 替换Client ID
+replace.exe .\output_gitee 0e579c516c3dcxxxxxxxxxxx d2c9e0edd275537086391bcd1975f92b7db79ffa69yyyyyyyyyyyyy
+
+:: 替换Client Secret
+replace.exe .\output_gitee c45605c3d9d96dbf3dab0xxxxxxxxx 2aa3a353f7363fc1e1afacb07871c4dfd7ad88969d942yyyyyyyyyyyyyyyyyy
+
+:: 同步到gitee
+cd output_gitee
+git add . 
+git commit -m &quot;Gridea push&quot;
+git push -u origin master
+
+echo &quot;请到gitee上点更新pages&quot;
+
+pause
+</code></pre>
+<h2 id="主题">主题</h2>
+<p>本博客使用的主题是 Concise <a href="https://www.jianshu.com/p/78e3ee0d8781">https://www.jianshu.com/p/78e3ee0d8781</a>，并做了小部分修改。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li>Gitee pages 官方指导  <a href="https://gitee.com/help/articles/4136#article-header0">https://gitee.com/help/articles/4136#article-header0</a></li>
+<li>Gridea 官方文档 <a href="https://gridea.dev/docs/">https://gridea.dev/docs/</a></li>
+<li>Gridea 上手教程 <a href="https://zhuanlan.zhihu.com/p/71681116">https://zhuanlan.zhihu.com/p/71681116</a></li>
+<li>在 Gridea 中配置 Gitalk 评论系统 <a href="https://wherelse.cc/post/config-gitalk-in-the-gridea/">https://wherelse.cc/post/config-gitalk-in-the-gridea/</a></li>
+<li>Hexo 接入码云评论系统 <a href="https://blog.csdn.net/adobeid/article/details/82261930">https://blog.csdn.net/adobeid/article/details/82261930</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://qinwanlin.github.io/post/hello-gridea/</id>
+        <link href="https://qinwanlin.github.io/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="https://gridea.dev/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>
